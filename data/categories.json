@@ -1,0 +1,38 @@
+[
+  {
+    "label": "Men's health",
+    "slug": "mens-health",
+    "count": 14,
+    "icon": "♂"
+  },
+  {
+    "label": "Women's health",
+    "slug": "womens-health",
+    "count": 11,
+    "icon": "♀"
+  },
+  {
+    "label": "Mental health",
+    "slug": "mental-health",
+    "count": 9,
+    "icon": "◎"
+  },
+  {
+    "label": "Weight loss",
+    "slug": "weight-loss",
+    "count": 7,
+    "icon": "▽"
+  },
+  {
+    "label": "Primary care",
+    "slug": "primary-care",
+    "count": 6,
+    "icon": "✚"
+  },
+  {
+    "label": "Specialty",
+    "slug": "specialty",
+    "count": 8,
+    "icon": "◈"
+  }
+]

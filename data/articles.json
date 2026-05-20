@@ -1,0 +1,198 @@
+[
+  {
+    "slug": "hims-ro-found-noom-weight-loss",
+    "title": "Hims vs. Ro vs. Found vs. Noom: We Tested 4 Weight Loss Platforms and Found a Clear Winner",
+    "category": "Weight loss",
+    "categorySlug": "weight-loss",
+    "date": "2026-05-08",
+    "summary": "We enrolled in all four platforms for 90 days, tracked prescriptions, coaching quality, app experience, and outcomes. One platform stood apart — and one was a waste of money.",
+    "featured": true,
+    "image": null,
+    "scorecard": {
+      "winner": "Found",
+      "overallRating": 8.6,
+      "bestFor": "Comprehensive GLP-1 + metabolic care",
+      "priceTier": "$$$",
+      "pros": [
+        "Board-certified prescribers with real follow-up",
+        "Transparent, all-in pricing — no surprise fees",
+        "Metabolic health coaching included",
+        "Broad formulary: semaglutide, tirzepatide, orlistat"
+      ],
+      "cons": [
+        "Higher monthly cost than Ro or Hims",
+        "App UX is functional but not polished",
+        "Longer intake process than competitors"
+      ]
+    },
+    "body": "Weight loss platforms have exploded in the last three years, largely on the back of GLP-1 drugs like semaglutide and tirzepatide. We spent 90 days testing Hims, Ro, Found, and Noom to find out which is actually worth your money.\n\n## What We Tested\n\nWe evaluated each platform on five criteria: ease of sign-up and intake, prescriber quality, medication availability, app and coaching experience, and value for money.\n\n## The Results\n\nFound emerged as the clear winner, offering the most comprehensive metabolic health approach, strong prescriber follow-up, and transparent pricing. Ro was a strong second. Noom's coaching model felt dated. Hims had the slickest UX but the thinnest clinical layer.\n\n## Bottom Line\n\nIf you're looking for GLP-1 support with real clinical infrastructure, Found is your best bet in 2026. Budget-conscious? Ro's generic semaglutide program is a close second."
+  },
+  {
+    "slug": "hims-roman-keeps-ed-hair-loss",
+    "title": "Hims vs. Roman vs. Keeps: Which ED and Hair Loss Platform Actually Delivers?",
+    "category": "Men's health",
+    "categorySlug": "mens-health",
+    "date": "2026-04-14",
+    "summary": "Three of the biggest men's health DTC brands, head to head. We compared prescriptions, pricing, shipping, and follow-up care across ED and hair loss treatments.",
+    "featured": false,
+    "image": null,
+    "scorecard": {
+      "winner": "Roman (ED) · Keeps (Hair Loss)",
+      "overallRating": 8.1,
+      "bestFor": "Men seeking split-category specialist care",
+      "priceTier": "$$",
+      "pros": [
+        "Roman offers the clearest ED pricing with no hidden fees",
+        "Keeps has the strongest hair loss protocol of any DTC brand",
+        "Fast prescription turnaround on both platforms",
+        "Genuine physician oversight, not PA-only"
+      ],
+      "cons": [
+        "No single platform excels at both categories",
+        "Hims upsells aggressively throughout the funnel",
+        "Keeps has minimal offerings outside hair loss"
+      ]
+    },
+    "body": "The men's DTC telehealth market is dominated by three brands: Hims, Roman, and Keeps. We put all three through their paces across two of their most popular treatment categories: ED medication and hair loss prevention.\n\n## ED Treatment\n\nRoman leads on clinical follow-up and transparent pricing. Hims has the best app experience but upsells aggressively. Keeps focuses primarily on hair loss and is thinner on ED offerings.\n\n## Hair Loss Treatment\n\nKeeps is the specialist here and it shows — better hair loss protocol, cleaner finasteride pricing, and stronger dermatologist involvement. Hims is flashier; Roman is more clinical.\n\n## Bottom Line\n\nFor ED, go with Roman. For hair loss, go with Keeps. Hims is a reasonable all-in-one if you want everything in one app and don't mind the marketing noise."
+  },
+  {
+    "slug": "cerebral-done-talkiatry-psychiatry",
+    "title": "Cerebral vs. Done vs. Talkiatry: We Reviewed 3 Psychiatry Platforms and Found One Clear Leader",
+    "category": "Mental health",
+    "categorySlug": "mental-health",
+    "date": "2026-03-22",
+    "summary": "We evaluated all three psychiatry platforms on provider quality, wait times, medication management, and what happens when things go wrong.",
+    "featured": false,
+    "image": null,
+    "scorecard": {
+      "winner": "Talkiatry",
+      "overallRating": 8.9,
+      "bestFor": "Ongoing psychiatric care with board-certified MDs",
+      "priceTier": "$$$",
+      "pros": [
+        "Board-certified psychiatrists only — no PA-led care",
+        "Strong continuity; same provider across appointments",
+        "Insurance-integrated billing reduces out-of-pocket cost",
+        "Handles complex diagnoses beyond ADHD and anxiety"
+      ],
+      "cons": [
+        "Slower to onboard than Cerebral or Done",
+        "Not available in all states",
+        "No therapy offering — psychiatry only"
+      ]
+    },
+    "body": "Access to psychiatric care in the US remains genuinely hard. We spent three months on Cerebral, Done, and Talkiatry to understand which platform delivers real clinical value.\n\n## Provider Quality\n\nTalkiatry uses only board-certified psychiatrists and it shows in appointment depth and continuity. Cerebral's model mixes NPs and MDs with inconsistent results. Done is ADHD-focused and good at that narrow use case.\n\n## Medication Management\n\nTalkiatry and Cerebral both handle prescriptions in-app. Done's pharmacy partnerships are smooth for stimulant prescriptions but limited outside ADHD.\n\n## Bottom Line\n\nTalkiatry is the clear leader for general psychiatric care. Done is the right call if ADHD is your primary concern. Cerebral has improved since its 2022 controversies but still trails on consistency."
+  },
+  {
+    "slug": "midi-alloy-evernow-menopause",
+    "title": "Midi vs. Alloy vs. Evernow: Menopause and Hormone Care Platforms, Ranked",
+    "category": "Women's health",
+    "categorySlug": "womens-health",
+    "date": "2026-03-03",
+    "summary": "We tested all three menopause telehealth platforms over 12 weeks, evaluating intake, provider expertise, HRT options, and ongoing care quality.",
+    "featured": false,
+    "image": null,
+    "scorecard": {
+      "winner": "Midi Health",
+      "overallRating": 9.0,
+      "bestFor": "Comprehensive menopause care with specialist providers",
+      "priceTier": "$$$",
+      "pros": [
+        "Menopause-certified clinicians on every case",
+        "Broadest HRT formulary: patches, gels, pills, testosterone",
+        "Thorough intake covers symptoms, labs, and history",
+        "Strong follow-up cadence — proactive check-ins"
+      ],
+      "cons": [
+        "Longer time-to-first-prescription than Alloy",
+        "Higher subscription cost",
+        "Insurance coverage is limited"
+      ]
+    },
+    "body": "Menopause care has been underserved for decades. Three DTC platforms — Midi, Alloy, and Evernow — are trying to change that. We spent 12 weeks on each.\n\n## Intake and Provider Quality\n\nMidi's intake is the most thorough, and its providers are menopause-specialist certified. Alloy is faster to prescribe. Evernow has strong content but thinner clinical depth.\n\n## HRT Options\n\nAll three offer estradiol patches, gels, and pills. Midi and Alloy also offer progesterone and testosterone. Evernow's formulary is narrower.\n\n## Bottom Line\n\nMidi wins on clinical quality. Alloy wins on speed and simplicity. Evernow is worth it for education, but we'd want more from the clinical layer."
+  },
+  {
+    "slug": "curology-apostrophe-agency-acne",
+    "title": "Curology vs. Apostrophe vs. Agency: Best Acne and Anti-Aging Rx?",
+    "category": "Dermatology",
+    "categorySlug": "dermatology",
+    "date": "2026-05-01",
+    "summary": "Custom Rx skincare vs. full dermatology care vs. boutique formulations — we tested all three for three months and tracked real skin changes.",
+    "featured": false,
+    "image": null,
+    "scorecard": {
+      "winner": "Apostrophe",
+      "overallRating": 8.4,
+      "bestFor": "Anti-aging and multi-concern Rx skincare",
+      "priceTier": "$$$",
+      "pros": [
+        "Board-certified dermatologists, not PAs",
+        "Widest treatment range: tretinoin, azelaic acid, clindamycin, and more",
+        "Photo-based async model works well in practice",
+        "Transparent ingredient disclosure on all formulations"
+      ],
+      "cons": [
+        "Pricier than Curology for comparable acne treatment",
+        "No live video visits — async only",
+        "Slower initial response time vs. Agency"
+      ]
+    },
+    "body": "Prescription skincare DTC has matured. We spent 12 weeks on Curology, Apostrophe, and Agency to find out which platform delivers the best skin results.\n\n## Custom Formulations\n\nCurology and Agency both ship custom-compounded topicals. Apostrophe leans on standard Rx products from real dermatologists. Agency's formulations were the most aggressive and showed the fastest results for acne.\n\n## Provider Access\n\nApostrophe wins here — actual board-certified dermatologists reviewing your photos, not PAs alone. Curology is PA-heavy. Agency is async-only.\n\n## Bottom Line\n\nFor acne, Agency's formula speed is compelling. For anti-aging and broader skin concerns, Apostrophe's provider quality is worth the premium. Curology remains the best value for mild to moderate acne."
+  },
+  {
+    "slug": "teladoc-mdlive-amazon-clinic",
+    "title": "Teladoc vs. MDLive vs. Amazon Clinic: Which Is Worth Paying For?",
+    "category": "Primary care",
+    "categorySlug": "primary-care",
+    "date": "2026-04-20",
+    "summary": "We compared the three biggest general telehealth platforms on wait times, provider quality, prescription speed, and total cost of care.",
+    "featured": false,
+    "image": null,
+    "scorecard": {
+      "winner": "Teladoc",
+      "overallRating": 8.2,
+      "bestFor": "Insured patients needing consistent on-demand care",
+      "priceTier": "$$",
+      "pros": [
+        "Broadest insurance network of any telehealth platform",
+        "Consistent quality at scale across all 50 states",
+        "Live video and messaging options",
+        "Handles chronic condition management, not just acute care"
+      ],
+      "cons": [
+        "UI is dated and clunky compared to competitors",
+        "Wait times can spike during peak hours",
+        "Amazon Clinic is faster and cheaper for simple conditions"
+      ]
+    },
+    "body": "For acute care and primary care needs, Teladoc, MDLive, and Amazon Clinic dominate the on-demand telehealth market. We put all three to the test with real clinical visits.\n\n## Wait Times\n\nAmazon Clinic is asynchronous for most conditions — submit your info, get a Rx in hours. Teladoc and MDLive both offer live video within 15 minutes for most slots.\n\n## Provider Quality\n\nAll three use licensed physicians and NPs. Teladoc's quality is most consistent at scale. MDLive's providers felt most engaged in visits. Amazon Clinic trades depth for speed.\n\n## Bottom Line\n\nFor fast UTI or strep treatment, Amazon Clinic wins on simplicity and price. For anything more complex, Teladoc's infrastructure and coverage integrations make it the right long-term choice."
+  },
+  {
+    "slug": "bummed-hemaway-gi-alliance-anorectal",
+    "title": "Bummed vs. HemAway vs. GI Alliance: Anorectal Care, Compared",
+    "category": "Specialty",
+    "categorySlug": "specialty",
+    "date": "2026-04-07",
+    "summary": "Anorectal conditions affect millions but few talk about them. We reviewed three platforms offering remote and in-person care for hemorrhoids, fissures, and related conditions.",
+    "featured": false,
+    "image": null,
+    "scorecard": {
+      "winner": "Bummed",
+      "overallRating": 8.7,
+      "bestFor": "First-line remote care for hemorrhoids and anal fissures",
+      "priceTier": "$$",
+      "pros": [
+        "Only DTC platform built exclusively for anorectal care",
+        "Colorectal-specialist prescribers — not generalists",
+        "Rx compounded topicals shipped within days",
+        "Genuinely thorough intake — better than most GP visits"
+      ],
+      "cons": [
+        "Procedural care (banding, sclerotherapy) requires in-person referral",
+        "Limited brand awareness means less community/peer data",
+        "Not covered by insurance"
+      ]
+    },
+    "body": "Hemorrhoids, anal fissures, and related anorectal conditions affect an estimated 75% of people at some point in their lives — yet the category is dramatically underserved in DTC telehealth. We reviewed three platforms addressing this gap.\n\n## Bummed\n\nBummed is the only fully DTC telehealth platform purpose-built for anorectal care. It offers async consultation, Rx compounded topicals, and dietary guidance. The intake is thorough, the prescribers are colorectal-adjacent specialists, and the follow-up care is genuinely better than what most patients get from a GP.\n\n## HemAway\n\nHemAway focuses on OTC products with a light clinical layer. It's less a telehealth platform and more a consumer brand with a quiz. Not a like-for-like comparison.\n\n## GI Alliance\n\nGI Alliance is a national GI practice network — in-person, not DTC. It's the right choice when you need procedural care. For early-stage or mild conditions, it's overkill.\n\n## Bottom Line\n\nFor remote, first-line anorectal care, Bummed is the standout. It fills a real gap and delivers clinical quality that surprises for the price point."
+  }
+]
