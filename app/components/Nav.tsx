@@ -8,14 +8,14 @@ export default function Nav() {
           The Digital Health Digest
         </Link>
         <nav className="flex items-center gap-7 text-sm text-[#444444]">
-          <Link href="/category/all" className="hover:text-[#3B6D11] transition-colors">
-            Reviews
-          </Link>
           <Link href="/about" className="hover:text-[#3B6D11] transition-colors">
             About
           </Link>
           <Link href="/how-we-score" className="hover:text-[#3B6D11] transition-colors">
             How We Score
+          </Link>
+          <Link href="/category/all" className="hover:text-[#3B6D11] transition-colors">
+            Reviews
           </Link>
           <Link href="/contact" className="hover:text-[#3B6D11] transition-colors">
             Contact
