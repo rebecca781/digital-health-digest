@@ -2,31 +2,44 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import CategoryTag from "@/app/components/CategoryTag";
 import { formatDate } from "@/lib/formatDate";
-import articles from "@/data/articles.json";
-import categories from "@/data/categories.json";
+import { safeFetch, sanityIsConfigured } from "@/sanity/lib/client";
+import {
+  ALL_ARTICLES_QUERY,
+  ARTICLES_BY_CATEGORY_QUERY,
+  ALL_CATEGORY_SLUGS_QUERY,
+  ALL_CATEGORIES_QUERY,
+} from "@/sanity/lib/queries";
+import type { SanityArticle, SanityCategory } from "@/types/sanity";
+
+export const revalidate = 60;
 
 interface PageProps {
   params: { slug: string };
 }
 
-export function generateStaticParams() {
-  const slugs = categories.map((c) => ({ slug: c.slug }));
-  return [...slugs, { slug: "all" }];
+export async function generateStaticParams() {
+  if (!sanityIsConfigured) return [{ slug: "all" }];
+  const slugs = await safeFetch<string[]>(ALL_CATEGORY_SLUGS_QUERY, {}, []);
+  return [...slugs.map((s) => ({ slug: s })), { slug: "all" }];
 }
 
-export default function CategoryPage({ params }: PageProps) {
+export default async function CategoryPage({ params }: PageProps) {
   const { slug } = params;
-
   const isAll = slug === "all";
+
+  const [categories, articles] = await Promise.all([
+    safeFetch<SanityCategory[]>(ALL_CATEGORIES_QUERY, {}, []),
+    isAll
+      ? safeFetch<SanityArticle[]>(ALL_ARTICLES_QUERY, {}, [])
+      : safeFetch<SanityArticle[]>(ARTICLES_BY_CATEGORY_QUERY, { categorySlug: slug }, []),
+  ]);
+
+  // Only hard-404 on unknown categories once Sanity data is present.
+  // With an empty category list (pre-configuration) we fall through to empty state.
   const category = isAll ? null : categories.find((c) => c.slug === slug);
+  if (!isAll && !category && categories.length > 0) notFound();
 
-  if (!isAll && !category) notFound();
-
-  const filtered = isAll
-    ? articles
-    : articles.filter((a) => a.categorySlug === slug);
-
-  const heading = isAll ? "All Reviews" : category!.label;
+  const heading = isAll ? "All Reviews" : (category?.label ?? slug);
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
@@ -69,20 +82,30 @@ export default function CategoryPage({ params }: PageProps) {
         ))}
       </div>
 
-      {filtered.length === 0 ? (
-        <p className="text-sm text-[#aaaaaa]">No reviews yet in this category.</p>
+      {articles.length === 0 ? (
+        <p className="text-sm text-[#aaaaaa]">
+          No reviews yet in this category.
+        </p>
       ) : (
         <div className="flex flex-col divide-y divide-[#eeeeee]">
-          {filtered.map((article) => (
+          {articles.map((article) => (
             <div
               key={article.slug}
               className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 py-8"
-              style={{ borderBottomWidth: "0.5px" }}
             >
-              <div className="w-full aspect-video bg-[#EAF3DE] flex items-center justify-center shrink-0">
-                <span className="text-[#3B6D11] text-xs uppercase tracking-widest font-medium">
-                  Image
-                </span>
+              <div className="w-full aspect-video bg-[#EAF3DE] flex items-center justify-center shrink-0 overflow-hidden">
+                {article.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <span className="text-[#3B6D11] text-xs uppercase tracking-widest font-medium">
+                    Image
+                  </span>
+                )}
               </div>
               <div className="flex flex-col gap-2">
                 <CategoryTag

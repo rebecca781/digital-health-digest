@@ -1,14 +1,7 @@
-interface ScorecardData {
-  winner: string;
-  overallRating: number;
-  bestFor: string;
-  priceTier: string;
-  pros: string[];
-  cons: string[];
-}
+import type { SanityScorecard } from "@/types/sanity";
 
 interface ScorecardProps {
-  scorecard: ScorecardData;
+  scorecard: SanityScorecard;
 }
 
 function RatingBar({ rating }: { rating: number }) {
