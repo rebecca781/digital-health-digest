@@ -52,7 +52,7 @@ const PLACEHOLDER: SanityAboutPage = {
   pageTitle: "About The Digital Health Digest",
   tagline:
     "Independent editorial reviews of direct-to-consumer telehealth brands — so you can make smarter decisions about your care.",
-  image: null,
+  image: null,   // kept on type for Studio; not rendered by this page
   imageAlt: null,
   body: [
     {
@@ -155,43 +155,9 @@ export default async function AboutPage() {
         </p>
       </div>
 
-      {/* Body + image */}
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_280px] gap-12 items-start">
-        {/* Body copy */}
-        <div>
-          <PortableText value={page.body} components={ptComponents} />
-        </div>
-
-        {/* Headshot / team photo */}
-        <div className="md:sticky md:top-8">
-          {page.image ? (
-            <figure>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={page.image}
-                alt={page.imageAlt ?? page.pageTitle}
-                className="w-full aspect-square object-cover"
-                style={{ border: "0.5px solid #e0e0e0" }}
-              />
-              {page.imageAlt && (
-                <figcaption className="text-xs text-[#aaaaaa] mt-2">
-                  {page.imageAlt}
-                </figcaption>
-              )}
-            </figure>
-          ) : (
-            // Placeholder until an image is uploaded in Studio
-            <div
-              className="w-full aspect-square bg-[#EAF3DE] flex flex-col items-center justify-center gap-2"
-              style={{ border: "0.5px solid #d4e8c0" }}
-            >
-              <span className="text-[#3B6D11] text-2xl">◎</span>
-              <span className="text-[#3B6D11] text-xs uppercase tracking-widest font-medium">
-                Team photo
-              </span>
-            </div>
-          )}
-        </div>
+      {/* Body copy — single column, no image */}
+      <div className="max-w-2xl">
+        <PortableText value={page.body} components={ptComponents} />
       </div>
     </div>
   );

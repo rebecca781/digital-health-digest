@@ -11,14 +11,14 @@ export default function Nav() {
           <Link href="/category/all" className="hover:text-[#3B6D11] transition-colors">
             Reviews
           </Link>
-          <Link href="/category/all" className="hover:text-[#3B6D11] transition-colors">
-            Categories
+          <Link href="/about" className="hover:text-[#3B6D11] transition-colors">
+            About
           </Link>
           <Link href="/how-we-score" className="hover:text-[#3B6D11] transition-colors">
             How We Score
           </Link>
-          <Link href="/about" className="hover:text-[#3B6D11] transition-colors">
-            About
+          <Link href="/contact" className="hover:text-[#3B6D11] transition-colors">
+            Contact
           </Link>
         </nav>
       </div>
