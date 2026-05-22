@@ -184,6 +184,94 @@ export const articleType = defineType({
         }),
       ],
     }),
+    // ── Multi-platform comparison scorecard (optional) ─────────────────────────
+    // If present, the sidebar renders a comparison table instead of the single scorecard.
+    defineField({
+      name: "comparisonPlatforms",
+      title: "Comparison Platforms",
+      type: "array",
+      description:
+        "Optional. Add two or more platforms to display a multi-platform comparison sidebar. If filled, replaces the single Scorecard in the sidebar.",
+      of: [
+        {
+          type: "object",
+          preview: {
+            select: { title: "name", subtitle: "overallScore" },
+            prepare({ title, subtitle }: { title?: string; subtitle?: number }) {
+              return {
+                title: title ?? "Unnamed platform",
+                subtitle: subtitle != null ? `Overall: ${subtitle.toFixed(1)} / 5.0` : "",
+              };
+            },
+          },
+          fields: [
+            defineField({
+              name: "name",
+              title: "Platform Name",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "url",
+              title: "Platform URL",
+              type: "url",
+            }),
+            defineField({
+              name: "platformType",
+              title: "Platform Type",
+              type: "string",
+              description: 'Short descriptor shown below the name, e.g. "Specialty anorectal"',
+            }),
+            defineField({
+              name: "isWinner",
+              title: "Top Pick / Winner",
+              type: "boolean",
+              description: "Mark exactly one platform per article as the top pick.",
+              initialValue: false,
+            }),
+            defineField({
+              name: "overallScore",
+              title: "Overall Score (0–5)",
+              type: "number",
+              validation: (Rule) => Rule.required().min(0).max(5).precision(1),
+            }),
+            defineField({
+              name: "scores",
+              title: "Dimension Scores",
+              type: "array",
+              description:
+                "Add one entry per scoring dimension. Use the same dimension names across all platforms in the article.",
+              of: [
+                {
+                  type: "object",
+                  preview: {
+                    select: { title: "dimension", subtitle: "value" },
+                  },
+                  fields: [
+                    defineField({
+                      name: "dimension",
+                      title: "Dimension",
+                      type: "string",
+                      description:
+                        'e.g. "Clinical quality", "Pricing", "Privacy", "Patient experience", "Ongoing care"',
+                      validation: (Rule) => Rule.required(),
+                    }),
+                    defineField({
+                      name: "value",
+                      title: "Score (0–5)",
+                      type: "number",
+                      validation: (Rule) =>
+                        Rule.required().min(0).max(5).precision(1),
+                    }),
+                  ],
+                },
+              ],
+            }),
+          ],
+        },
+      ],
+    }),
+
     defineField({
       name: "body",
       title: "Body",

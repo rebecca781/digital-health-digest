@@ -10,7 +10,13 @@ import {
   RELATED_ARTICLES_QUERY,
   ALL_ARTICLE_SLUGS_QUERY,
 } from "@/sanity/lib/queries";
-import type { SanityArticle, SanityArticleWithBody, SanityScorecard } from "@/types/sanity";
+import type {
+  SanityArticle,
+  SanityArticleWithBody,
+  SanityScorecard,
+  SanityComparisonPlatform,
+  SanityComparisonScore,
+} from "@/types/sanity";
 
 export const revalidate = 60;
 
@@ -264,6 +270,254 @@ function ScorecardSidebar({ sc }: { sc: SanityScorecard }) {
   );
 }
 
+// ─── Comparison sidebar helpers ──────────────────────────────────────────────
+
+/** Returns a bar fill color based on score value (0–5 scale). */
+function barColor(score: number): string {
+  if (score >= 4)   return "#2a7a4f"; // green  — high
+  if (score >= 2.5) return "#c07e00"; // amber  — mid
+  return                "#be3737";    // red    — low
+}
+
+function ScoreRow({
+  dimension,
+  value,
+  compact,
+}: {
+  dimension: string;
+  value: number;
+  compact: boolean;
+}) {
+  const pct = Math.min((value / 5) * 100, 100);
+  return (
+    <div style={{ marginBottom: compact ? "0.4rem" : "0.55rem" }}>
+      <div
+        className="flex items-center justify-between"
+        style={{ marginBottom: "3px" }}
+      >
+        <span
+          className="uppercase tracking-wide text-[#888]"
+          style={{ fontSize: compact ? "9px" : "10px", letterSpacing: "0.07em" }}
+        >
+          {dimension}
+        </span>
+        <span
+          className="tabular-nums text-[#1a3a52]"
+          style={{ fontSize: compact ? "11px" : "12px", fontWeight: 500 }}
+        >
+          {value.toFixed(1)}
+        </span>
+      </div>
+      <div
+        className="w-full bg-[#e8f1f7]"
+        style={{ height: compact ? "3px" : "4px", borderRadius: "2px" }}
+      >
+        <div
+          style={{
+            width: `${pct}%`,
+            height: "100%",
+            background: barColor(value),
+            borderRadius: "2px",
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
+// ─── Comparison sidebar (multi-platform) ─────────────────────────────────────
+
+function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[] }) {
+  // winner = first platform marked isWinner, else first in array
+  const winner = platforms.find((p) => p.isWinner) ?? platforms[0];
+  const others = platforms.filter((p) => p !== winner);
+
+  return (
+    <div
+      className="border border-[#d8d4cc] overflow-hidden"
+      style={{ borderWidth: "0.5px" }}
+    >
+      {/* ── Top-pick badge ────────────────────────────────── */}
+      <div className="px-5 pt-5 pb-3">
+        <span
+          style={{
+            display: "inline-block",
+            background: "#326891",
+            color: "#fff",
+            fontSize: "9px",
+            fontWeight: 600,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            padding: "0.25rem 0.65rem",
+            borderRadius: "999px",
+          }}
+        >
+          Top pick
+        </span>
+      </div>
+
+      {/* ── Winner card ───────────────────────────────────── */}
+      <div className="px-5 pb-5">
+        {/* Name + type */}
+        <p
+          className="text-[#1a1a1a] font-semibold"
+          style={{ fontSize: "15px", marginBottom: "2px" }}
+        >
+          {winner.url ? (
+            <a
+              href={winner.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#326891] transition-colors"
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              {winner.name}
+            </a>
+          ) : (
+            winner.name
+          )}
+        </p>
+        {winner.platformType && (
+          <p
+            className="uppercase tracking-wide text-[#888]"
+            style={{ fontSize: "9px", letterSpacing: "0.08em", marginBottom: "0.6rem" }}
+          >
+            {winner.platformType}
+          </p>
+        )}
+
+        {/* Overall score */}
+        <div
+          className="rounded-[6px] bg-[#e8f1f7] px-4 py-4 text-center"
+          style={{ marginBottom: "1rem" }}
+        >
+          <div className="flex items-baseline justify-center gap-1 leading-none">
+            <span
+              className="font-serif font-bold text-[#1a3a52]"
+              style={{ fontSize: "42px" }}
+            >
+              {winner.overallScore.toFixed(1)}
+            </span>
+            <span className="text-[#326891] font-medium" style={{ fontSize: "14px" }}>
+              &thinsp;/ 5.0
+            </span>
+          </div>
+          <p
+            className="uppercase tracking-widest text-[#326891]"
+            style={{ fontSize: "9px", marginTop: "0.4rem" }}
+          >
+            Overall score
+          </p>
+        </div>
+
+        {/* Dimension bars */}
+        {winner.scores.map((s: SanityComparisonScore) => (
+          <ScoreRow
+            key={s.dimension}
+            dimension={s.dimension}
+            value={s.value}
+            compact={false}
+          />
+        ))}
+      </div>
+
+      {/* ── Other platforms ───────────────────────────────── */}
+      {others.length > 0 && (
+        <>
+          <div
+            className="border-t border-[#d8d4cc]"
+            style={{ borderTopWidth: "0.5px" }}
+          />
+          {/* Divider label */}
+          <div className="px-5 py-2.5 text-center">
+            <span
+              className="uppercase tracking-widest text-[#888]"
+              style={{ fontSize: "9px", letterSpacing: "0.1em" }}
+            >
+              How the others scored
+            </span>
+          </div>
+
+          {others.map((platform) => (
+            <div key={platform.name}>
+              <div
+                className="border-t border-[#d8d4cc]"
+                style={{ borderTopWidth: "0.5px" }}
+              />
+              <div className="px-5 py-4">
+                {/* Name row with overall score */}
+                <div
+                  className="flex items-start justify-between gap-2"
+                  style={{ marginBottom: "0.6rem" }}
+                >
+                  <div className="min-w-0">
+                    <p
+                      className="text-[#1a1a1a] font-medium truncate"
+                      style={{ fontSize: "12px", marginBottom: "1px" }}
+                    >
+                      {platform.url ? (
+                        <a
+                          href={platform.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-[#326891] transition-colors"
+                          style={{ textDecoration: "none", color: "inherit" }}
+                        >
+                          {platform.name}
+                        </a>
+                      ) : (
+                        platform.name
+                      )}
+                    </p>
+                    {platform.platformType && (
+                      <p
+                        className="uppercase tracking-wide text-[#888]"
+                        style={{ fontSize: "9px", letterSpacing: "0.07em" }}
+                      >
+                        {platform.platformType}
+                      </p>
+                    )}
+                  </div>
+                  <span
+                    className="font-serif font-bold text-[#4a4a4a] shrink-0"
+                    style={{ fontSize: "20px", lineHeight: 1 }}
+                  >
+                    {platform.overallScore.toFixed(1)}
+                  </span>
+                </div>
+
+                {/* Dimension bars (compact) */}
+                {platform.scores.map((s: SanityComparisonScore) => (
+                  <ScoreRow
+                    key={s.dimension}
+                    dimension={s.dimension}
+                    value={s.value}
+                    compact={true}
+                  />
+                ))}
+              </div>
+            </div>
+          ))}
+        </>
+      )}
+
+      {/* ── How we score link ─────────────────────────────── */}
+      <div
+        className="border-t border-[#d8d4cc] px-5 py-3 text-center"
+        style={{ borderTopWidth: "0.5px" }}
+      >
+        <Link
+          href="/how-we-score"
+          className="text-[#326891] hover:underline"
+          style={{ fontSize: "11px" }}
+        >
+          How we score →
+        </Link>
+      </div>
+    </div>
+  );
+}
+
 // ─── Related article card ─────────────────────────────────────────────────────
 
 function RelatedCard({ article }: { article: SanityArticle }) {
@@ -426,14 +680,19 @@ export default async function ReviewPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Right — sticky scorecard sidebar (desktop only) */}
-        {article.scorecard && (
+        {/* Right — sticky sidebar (desktop only)
+            Priority: comparisonPlatforms → scorecard → nothing */}
+        {(article.comparisonPlatforms?.length || article.scorecard) ? (
           <aside className="hidden lg:block">
             <div className="sticky" style={{ top: "2rem" }}>
-              <ScorecardSidebar sc={article.scorecard} />
+              {article.comparisonPlatforms && article.comparisonPlatforms.length > 0 ? (
+                <ComparisonSidebar platforms={article.comparisonPlatforms} />
+              ) : article.scorecard ? (
+                <ScorecardSidebar sc={article.scorecard} />
+              ) : null}
             </div>
           </aside>
-        )}
+        ) : null}
       </div>
 
       {/* ── 4. Editorial independence note ───────────────────────────── */}

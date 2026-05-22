@@ -1,5 +1,23 @@
 import type { PortableTextBlock } from "@portabletext/react";
 
+// ── Multi-platform comparison scorecard ─────────────────────────────────────
+
+export interface SanityComparisonScore {
+  dimension: string;
+  value: number; // 0–5
+}
+
+export interface SanityComparisonPlatform {
+  name: string;
+  url?: string;
+  platformType?: string;
+  isWinner: boolean;
+  overallScore: number; // 0–5
+  scores: SanityComparisonScore[];
+}
+
+// ── Single-platform scorecard (existing) ────────────────────────────────────
+
 export interface SanityScorecard {
   winner: string;
   overallRating: number;  // stored 0–10; displayed as /5.0 (÷2)
@@ -29,9 +47,10 @@ export interface SanityArticle {
   scorecard: SanityScorecard | null;
 }
 
-/** Article shape returned by the single-article query (includes body) */
+/** Article shape returned by the single-article query (includes body + comparison) */
 export interface SanityArticleWithBody extends SanityArticle {
   body: PortableTextBlock[] | null;
+  comparisonPlatforms?: SanityComparisonPlatform[] | null;
 }
 
 export interface SanityCategory {

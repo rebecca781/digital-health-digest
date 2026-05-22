@@ -17,7 +17,18 @@ const ARTICLE_FIELDS = groq`
 
 const ARTICLE_FIELDS_WITH_BODY = groq`
   ${ARTICLE_FIELDS},
-  body
+  body,
+  comparisonPlatforms[] {
+    name,
+    url,
+    platformType,
+    isWinner,
+    overallScore,
+    scores[] {
+      dimension,
+      value
+    }
+  }
 `;
 
 // ---------- Public queries ----------
