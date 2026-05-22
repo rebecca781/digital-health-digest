@@ -141,6 +141,47 @@ export const articleType = defineType({
           of: [{ type: "string" }],
           validation: (Rule) => Rule.required().min(1),
         }),
+        // Per-category scores — 0–5 scale, optional for backwards compat
+        defineField({
+          name: "clinicalQuality",
+          title: "Clinical Quality Score",
+          type: "number",
+          description: "0–5 scale. Leave blank to show as 0.",
+          initialValue: 0,
+          validation: (Rule) => Rule.min(0).max(5).precision(1),
+        }),
+        defineField({
+          name: "pricing",
+          title: "Pricing Score",
+          type: "number",
+          description: "0–5 scale. Leave blank to show as 0.",
+          initialValue: 0,
+          validation: (Rule) => Rule.min(0).max(5).precision(1),
+        }),
+        defineField({
+          name: "privacy",
+          title: "Privacy Score",
+          type: "number",
+          description: "0–5 scale. Leave blank to show as 0.",
+          initialValue: 0,
+          validation: (Rule) => Rule.min(0).max(5).precision(1),
+        }),
+        defineField({
+          name: "patientExperience",
+          title: "Patient Experience Score",
+          type: "number",
+          description: "0–5 scale. Leave blank to show as 0.",
+          initialValue: 0,
+          validation: (Rule) => Rule.min(0).max(5).precision(1),
+        }),
+        defineField({
+          name: "ongoingCare",
+          title: "Ongoing Care Score",
+          type: "number",
+          description: "0–5 scale. Leave blank to show as 0.",
+          initialValue: 0,
+          validation: (Rule) => Rule.min(0).max(5).precision(1),
+        }),
       ],
     }),
     defineField({
@@ -151,9 +192,10 @@ export const articleType = defineType({
         {
           type: "block",
           styles: [
-            { title: "Paragraph", value: "normal" },
-            { title: "Heading 2", value: "h2" },
-            { title: "Heading 3", value: "h3" },
+            { title: "Paragraph",  value: "normal"     },
+            { title: "Heading 2",  value: "h2"         },
+            { title: "Heading 3",  value: "h3"         },
+            { title: "Pull quote", value: "blockquote" },
           ],
           marks: {
             decorators: [

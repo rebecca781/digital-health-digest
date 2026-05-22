@@ -2,11 +2,17 @@ import type { PortableTextBlock } from "@portabletext/react";
 
 export interface SanityScorecard {
   winner: string;
-  overallRating: number;
+  overallRating: number;  // stored 0–10; displayed as /5.0 (÷2)
   bestFor: string;
   priceTier: string;
   pros: string[];
   cons: string[];
+  // Per-category scores — 0–5 scale, optional for backwards compat
+  clinicalQuality?: number;
+  pricing?: number;
+  privacy?: number;
+  patientExperience?: number;
+  ongoingCare?: number;
 }
 
 /** Article shape returned by listing queries (no body) */

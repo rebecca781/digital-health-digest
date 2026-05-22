@@ -3,7 +3,6 @@ import Link from "next/link";
 import { PortableText } from "@portabletext/react";
 import type { PortableTextComponents } from "@portabletext/react";
 import CategoryTag from "@/app/components/CategoryTag";
-import Scorecard from "@/app/components/Scorecard";
 import { formatDate } from "@/lib/formatDate";
 import { safeFetch, sanityIsConfigured } from "@/sanity/lib/client";
 import {
@@ -11,7 +10,7 @@ import {
   RELATED_ARTICLES_QUERY,
   ALL_ARTICLE_SLUGS_QUERY,
 } from "@/sanity/lib/queries";
-import type { SanityArticle, SanityArticleWithBody } from "@/types/sanity";
+import type { SanityArticle, SanityArticleWithBody, SanityScorecard } from "@/types/sanity";
 
 export const revalidate = 60;
 
@@ -19,11 +18,15 @@ interface PageProps {
   params: { slug: string };
 }
 
+// ─── Static params ───────────────────────────────────────────────────────────
+
 export async function generateStaticParams() {
   if (!sanityIsConfigured) return [];
   const slugs = await safeFetch<string[]>(ALL_ARTICLE_SLUGS_QUERY, {}, []);
   return slugs.map((slug) => ({ slug }));
 }
+
+// ─── Metadata ────────────────────────────────────────────────────────────────
 
 export async function generateMetadata({ params }: PageProps) {
   const article = await safeFetch<SanityArticleWithBody | null>(
@@ -38,23 +41,277 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
+// ─── Portable Text components ─────────────────────────────────────────────────
+
 const ptComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="text-[#4a4a4a] leading-relaxed text-base mb-5">{children}</p>
+      <p
+        className="mb-6 text-[#1a1a1a]"
+        style={{ fontSize: "17px", lineHeight: "1.8" }}
+      >
+        {children}
+      </p>
     ),
     h2: ({ children }) => (
-      <h2 className="font-serif text-xl text-[#1a1a1a] mt-10 mb-4">{children}</h2>
+      <h2
+        className="font-serif text-[#1a1a1a] mt-12 mb-4 pl-3 border-l-[4px] border-[#326891]"
+        style={{ fontSize: "22px", lineHeight: "1.35" }}
+      >
+        {children}
+      </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="font-serif text-lg text-[#1a1a1a] mt-8 mb-3">{children}</h3>
+      <h3
+        className="font-serif text-[#1a1a1a] mt-10 mb-3"
+        style={{ fontSize: "18px", lineHeight: "1.4" }}
+      >
+        {children}
+      </h3>
+    ),
+    blockquote: ({ children }) => (
+      <blockquote className="my-8 pl-5 border-l-[3px] border-[#326891]">
+        <p
+          className="font-serif italic text-[#4a4a4a]"
+          style={{ fontSize: "20px", lineHeight: "1.65" }}
+        >
+          {children}
+        </p>
+      </blockquote>
     ),
   },
   marks: {
-    strong: ({ children }) => <strong className="font-semibold">{children}</strong>,
+    strong: ({ children }) => (
+      <strong className="font-semibold text-[#1a1a1a]">{children}</strong>
+    ),
     em: ({ children }) => <em className="italic">{children}</em>,
+    link: ({ value, children }) => (
+      <a
+        href={value?.href}
+        className="text-[#326891] no-underline hover:underline transition-colors"
+        target={value?.href?.startsWith("http") ? "_blank" : undefined}
+        rel={value?.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+      >
+        {children}
+      </a>
+    ),
   },
 };
+
+// ─── Per-category score rows ──────────────────────────────────────────────────
+
+const CATEGORY_SCORES: {
+  key: keyof Pick<
+    SanityScorecard,
+    "clinicalQuality" | "pricing" | "privacy" | "patientExperience" | "ongoingCare"
+  >;
+  label: string;
+}[] = [
+  { key: "clinicalQuality",   label: "Clinical quality"   },
+  { key: "pricing",           label: "Pricing"            },
+  { key: "privacy",           label: "Privacy"            },
+  { key: "patientExperience", label: "Patient experience" },
+  { key: "ongoingCare",       label: "Ongoing care"       },
+];
+
+// ─── Scorecard sidebar (desktop right column) ─────────────────────────────────
+
+function ScorecardSidebar({ sc }: { sc: SanityScorecard }) {
+  // overallRating is stored 0–10; display as /5.0
+  const displayScore = (sc.overallRating / 2).toFixed(1);
+
+  return (
+    <div
+      className="border border-[#d8d4cc] overflow-hidden"
+      style={{ borderWidth: "0.5px" }}
+    >
+      {/* Overall score */}
+      <div className="px-5 pt-5 pb-4">
+        <div
+          className="rounded-[6px] bg-[#e8f1f7] px-5 py-5 text-center"
+        >
+          <div className="flex items-baseline justify-center gap-1 leading-none">
+            <span
+              className="font-serif font-bold text-[#1a3a52]"
+              style={{ fontSize: "48px" }}
+            >
+              {displayScore}
+            </span>
+            <span className="text-base text-[#326891] font-medium">
+              &thinsp;/ 5.0
+            </span>
+          </div>
+          <p className="text-[10px] uppercase tracking-widest text-[#326891] mt-2.5">
+            Overall score
+          </p>
+        </div>
+      </div>
+
+      <div className="border-t border-[#d8d4cc]" style={{ borderTopWidth: "0.5px" }} />
+
+      {/* Per-category scores */}
+      <div className="px-5 py-4 flex flex-col gap-3.5">
+        {CATEGORY_SCORES.map(({ key, label }) => {
+          const score = sc[key] ?? 0;
+          const pct = Math.min((score / 5) * 100, 100);
+          return (
+            <div key={key}>
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-[11px] uppercase tracking-wide text-[#888]">
+                  {label}
+                </span>
+                <span
+                  className="text-[#1a3a52] tabular-nums"
+                  style={{ fontSize: "13px" }}
+                >
+                  {score.toFixed(1)}
+                </span>
+              </div>
+              <div
+                className="w-full bg-[#e8f1f7]"
+                style={{ height: "4px" }}
+              >
+                <div
+                  className="h-full bg-[#326891]"
+                  style={{ width: `${pct}%` }}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="border-t border-[#d8d4cc]" style={{ borderTopWidth: "0.5px" }} />
+
+      {/* Meta rows */}
+      <div className="px-5 py-4 flex flex-col gap-3">
+        {[
+          { label: "Winner",     value: sc.winner    },
+          { label: "Best for",   value: sc.bestFor   },
+          { label: "Price tier", value: sc.priceTier },
+        ].map(({ label, value }) => (
+          <div key={label} className="flex items-start justify-between gap-3">
+            <span className="text-[10px] uppercase tracking-widest text-[#888] pt-0.5 shrink-0">
+              {label}
+            </span>
+            <span
+              className="font-semibold text-[#1a1a1a] text-right"
+              style={{ fontSize: "13px" }}
+            >
+              {value}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <div className="border-t border-[#d8d4cc]" style={{ borderTopWidth: "0.5px" }} />
+
+      {/* Pros */}
+      <div className="px-5 pt-4 pb-3">
+        <p className="text-[10px] uppercase tracking-widest text-[#326891] mb-2.5">
+          Pros
+        </p>
+        <ul className="flex flex-col gap-1.5">
+          {sc.pros.map((pro, i) => (
+            <li
+              key={i}
+              className="flex items-start gap-2 text-[#1a1a1a]"
+              style={{ fontSize: "12px", lineHeight: "1.5" }}
+            >
+              <span className="text-[#326891] shrink-0 font-medium leading-snug">
+                +
+              </span>
+              {pro}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Cons */}
+      <div className="px-5 pt-3 pb-4 border-t border-[#d8d4cc]" style={{ borderTopWidth: "0.5px" }}>
+        <p className="text-[10px] uppercase tracking-widest text-[#888] mb-2.5">
+          Cons
+        </p>
+        <ul className="flex flex-col gap-1.5">
+          {sc.cons.map((con, i) => (
+            <li
+              key={i}
+              className="flex items-start gap-2 text-[#4a4a4a]"
+              style={{ fontSize: "12px", lineHeight: "1.5" }}
+            >
+              <span className="text-[#888] shrink-0 font-medium leading-snug">
+                −
+              </span>
+              {con}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="border-t border-[#d8d4cc]" style={{ borderTopWidth: "0.5px" }} />
+
+      {/* How we score */}
+      <div className="px-5 py-3 text-center">
+        <Link
+          href="/how-we-score"
+          className="text-[#326891] hover:underline"
+          style={{ fontSize: "11px" }}
+        >
+          How we score →
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+// ─── Related article card ─────────────────────────────────────────────────────
+
+function RelatedCard({ article }: { article: SanityArticle }) {
+  return (
+    <div className="flex flex-col gap-3">
+      <div className="w-full aspect-video bg-[#f4f0e8] flex items-center justify-center overflow-hidden">
+        {article.image ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={article.image}
+            alt={article.title}
+            className="w-full h-full object-cover"
+          />
+        ) : (
+          <span
+            className="rounded-full bg-[#ece8de]"
+            style={{ width: "36px", height: "36px" }}
+            aria-hidden="true"
+          />
+        )}
+      </div>
+      <CategoryTag label={article.category} slug={article.categorySlug} />
+      <h3
+        className="font-serif leading-snug text-[#1a1a1a]"
+        style={{ fontSize: "15px" }}
+      >
+        <Link
+          href={`/reviews/${article.slug}`}
+          className="hover:text-[#326891] transition-colors"
+        >
+          {article.title}
+        </Link>
+      </h3>
+      <div className="flex items-center gap-3 flex-wrap">
+        {article.scorecard && (
+          <span className="inline-block bg-[#e8f1f7] text-[#1a3a52] font-medium px-2 py-0.5" style={{ fontSize: "11px" }}>
+            {(article.scorecard.overallRating / 2).toFixed(1)}&thinsp;/&thinsp;5.0
+          </span>
+        )}
+        <p className="text-[#888]" style={{ fontSize: "12px" }}>
+          {formatDate(article.date)}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default async function ReviewPage({ params }: PageProps) {
   const article = await safeFetch<SanityArticleWithBody | null>(
@@ -72,95 +329,139 @@ export default async function ReviewPage({ params }: PageProps) {
   );
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12">
-      {/* Breadcrumb */}
-      <p className="text-xs text-[#888] mb-8">
-        <Link href="/" className="hover:text-[#326891] transition-colors">
-          Home
-        </Link>{" "}
-        /{" "}
-        <Link
-          href={`/category/${article.categorySlug}`}
-          className="hover:text-[#326891] transition-colors"
+    <div className="max-w-6xl mx-auto px-6">
+
+      {/* ── 1. Article header ─────────────────────────────────────────── */}
+      <header
+        className="pt-10 pb-8 border-b border-[#d8d4cc]"
+        style={{ borderBottomWidth: "0.5px" }}
+      >
+        {/* Breadcrumb */}
+        <nav className="text-[#888] mb-5" style={{ fontSize: "12px" }}>
+          <Link
+            href="/category/all"
+            className="hover:text-[#326891] transition-colors"
+          >
+            Reviews
+          </Link>
+          <span className="mx-2">→</span>
+          <Link
+            href={`/category/${article.categorySlug}`}
+            className="hover:text-[#326891] transition-colors"
+          >
+            {article.category}
+          </Link>
+        </nav>
+
+        {/* Category eyebrow */}
+        <p
+          className="uppercase tracking-widest text-[#326891] mb-4"
+          style={{ fontSize: "10px" }}
         >
           {article.category}
-        </Link>{" "}
-        / Review
-      </p>
+        </p>
 
-      <div className="max-w-2xl">
-        <CategoryTag label={article.category} slug={article.categorySlug} />
-        <h1 className="font-serif text-4xl leading-snug text-[#1a1a1a] mt-3 mb-4">
+        {/* Headline */}
+        <h1
+          className="font-serif text-[#1a1a1a] leading-tight mb-5"
+          style={{ fontSize: "clamp(26px, 4vw, 36px)", maxWidth: "780px" }}
+        >
           {article.title}
         </h1>
-        <p className="text-sm text-[#888] mb-8">{formatDate(article.date)}</p>
-      </div>
 
-      {/* Hero image */}
-      <div className="w-full aspect-[16/7] bg-[#f4f0e8] flex items-center justify-center mb-12 overflow-hidden">
+        {/* Dek */}
+        <p
+          className="text-[#4a4a4a] mb-6"
+          style={{ fontSize: "16px", lineHeight: "1.65", maxWidth: "680px" }}
+        >
+          {article.summary}
+        </p>
+
+        {/* Byline */}
+        <p className="text-[#888]" style={{ fontSize: "13px" }}>
+          By The Digital Health Digest&nbsp;&nbsp;·&nbsp;&nbsp;{formatDate(article.date)}
+        </p>
+      </header>
+
+      {/* ── 2. Hero image ─────────────────────────────────────────────── */}
+      <div
+        className="w-full bg-[#f4f0e8] overflow-hidden"
+        style={{ maxHeight: "420px" }}
+      >
         {article.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
             src={article.image}
             alt={article.title}
-            className="w-full h-full object-cover"
+            className="w-full object-cover"
+            style={{ maxHeight: "420px", display: "block" }}
           />
         ) : (
-          <span className="bg-[#ece8de] w-14 h-14 rounded-full" aria-hidden="true" />
+          <div
+            className="w-full flex items-center justify-center bg-[#f4f0e8]"
+            style={{ height: "280px" }}
+          >
+            <span
+              className="rounded-full bg-[#ece8de]"
+              style={{ width: "56px", height: "56px", display: "block" }}
+              aria-hidden="true"
+            />
+          </div>
         )}
       </div>
 
-      {/* Scorecard */}
-      {article.scorecard && <Scorecard scorecard={article.scorecard} />}
+      {/* ── 3. Content grid ───────────────────────────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-12 pt-12 pb-16">
 
-      {/* Summary callout */}
-      <div className="max-w-2xl mb-10 border-l-2 border-[#326891] pl-5 py-1">
-        <p className="text-base text-[#4a4a4a] leading-relaxed italic">
-          {article.summary}
+        {/* Left — article body */}
+        <div>
+          <div style={{ maxWidth: "640px" }}>
+            {article.body && article.body.length > 0 ? (
+              <PortableText value={article.body} components={ptComponents} />
+            ) : (
+              <p className="text-[#888] italic" style={{ fontSize: "15px" }}>
+                Body content coming soon.
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Right — sticky scorecard sidebar (desktop only) */}
+        {article.scorecard && (
+          <aside className="hidden lg:block">
+            <div className="sticky" style={{ top: "2rem" }}>
+              <ScorecardSidebar sc={article.scorecard} />
+            </div>
+          </aside>
+        )}
+      </div>
+
+      {/* ── 4. Editorial independence note ───────────────────────────── */}
+      <div
+        className="border-t border-[#d8d4cc] pt-8 pb-6 text-center"
+        style={{ borderTopWidth: "0.5px" }}
+      >
+        <p className="italic text-[#888]" style={{ fontSize: "12px" }}>
+          The Digital Health Digest is editorially independent. We do not accept
+          payment from the brands we review.
         </p>
       </div>
 
-      {/* Body */}
-      <div className="max-w-2xl">
-        {article.body && article.body.length > 0 ? (
-          <PortableText value={article.body} components={ptComponents} />
-        ) : (
-          <p className="text-sm text-[#888] italic">Body content coming soon.</p>
-        )}
-      </div>
-
-      {/* Divider */}
-      <div
-        className="border-t border-[#d8d4cc] my-16 max-w-2xl"
-        style={{ borderTopWidth: "0.5px" }}
-      />
-
-      {/* Related reviews */}
+      {/* ── 5. More reviews ──────────────────────────────────────────── */}
       {relatedArticles.length > 0 && (
-        <section className="max-w-2xl">
-          <h2 className="text-xs uppercase tracking-widest font-medium text-[#888] mb-6">
-            More in {article.category}
+        <section
+          className="border-t border-[#d8d4cc] pt-10 pb-16"
+          style={{ borderTopWidth: "0.5px" }}
+        >
+          <h2
+            className="uppercase tracking-widest font-medium text-[#888] mb-8"
+            style={{ fontSize: "11px" }}
+          >
+            More reviews
           </h2>
-          <div className="flex flex-col gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {relatedArticles.map((r) => (
-              <div
-                key={r.slug}
-                className="border-b border-[#d8d4cc] pb-6"
-                style={{ borderBottomWidth: "0.5px" }}
-              >
-                <CategoryTag label={r.category} slug={r.categorySlug} />
-                <h3 className="font-serif text-lg leading-snug text-[#1a1a1a] mt-1.5">
-                  <Link
-                    href={`/reviews/${r.slug}`}
-                    className="hover:text-[#326891] transition-colors"
-                  >
-                    {r.title}
-                  </Link>
-                </h3>
-                <p className="text-xs text-[#888] mt-1">
-                  {formatDate(r.date)}
-                </p>
-              </div>
+              <RelatedCard key={r.slug} article={r} />
             ))}
           </div>
         </section>
