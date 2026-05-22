@@ -61,8 +61,8 @@ const ptComponents: PortableTextComponents = {
     ),
     h2: ({ children }) => (
       <h2
-        className="font-serif text-[#1a1a1a] mt-12 mb-4 pl-3 border-l-[4px] border-[#326891]"
-        style={{ fontSize: "22px", lineHeight: "1.35" }}
+        className="font-serif text-[#1a1a1a] mt-12 mb-4 border-l-[3px] border-[#326891]"
+        style={{ fontSize: "26px", lineHeight: "1.3", paddingLeft: "12px" }}
       >
         {children}
       </h2>
@@ -76,14 +76,21 @@ const ptComponents: PortableTextComponents = {
       </h3>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="my-8 pl-5 border-l-[3px] border-[#326891]">
+      <div
+        className="my-8 rounded-lg"
+        style={{
+          background: "#f4f0e8",
+          borderRadius: "8px",
+          padding: "1.25rem",
+        }}
+      >
         <p
-          className="font-serif italic text-[#4a4a4a]"
-          style={{ fontSize: "20px", lineHeight: "1.65" }}
+          className="text-[#1a1a1a]"
+          style={{ fontSize: "16px", lineHeight: "1.7", margin: 0 }}
         >
           {children}
         </p>
-      </blockquote>
+      </div>
     ),
   },
   marks: {
@@ -365,10 +372,7 @@ function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[
       )}
 
       {/* ── First (winner) card ───────────────────────────── */}
-      <div
-        className="px-5 pb-5"
-        style={{ paddingTop: first.isWinner ? undefined : "1.25rem" }}
-      >
+      <div style={{ padding: "1.25rem", paddingTop: first.isWinner ? "0.5rem" : "1.25rem" }}>
         {/* Name + platform type */}
         <p
           className="text-[#1a1a1a] font-semibold"
@@ -405,7 +409,7 @@ function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[
           <div className="flex items-baseline justify-center gap-1 leading-none">
             <span
               className="font-serif font-bold text-[#1a3a52]"
-              style={{ fontSize: "42px" }}
+              style={{ fontSize: "32px" }}
             >
               {first.overallScore.toFixed(1)}
             </span>
@@ -456,7 +460,7 @@ function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[
                 className="border-t border-[#d8d4cc]"
                 style={{ borderTopWidth: "0.5px" }}
               />
-              <div className="px-5 py-4">
+              <div style={{ padding: "1.25rem" }}>
                 {/* Name + score inline */}
                 <div
                   className="flex items-start justify-between gap-2"
@@ -518,6 +522,121 @@ function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[
         className="border-t border-[#d8d4cc] px-5 py-3 text-center"
         style={{ borderTopWidth: "0.5px" }}
       >
+        <Link
+          href="/how-we-score"
+          className="text-[#326891] hover:underline"
+          style={{ fontSize: "11px" }}
+        >
+          How we score →
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+// ─── Mobile comparison stack (inline, below lg breakpoint) ───────────────────
+// Rendered between the hero image and the article body on small screens.
+// Mirrors the sidebar sort logic: isWinner first, then by overallScore desc.
+
+function MobileComparisonStack({ platforms }: { platforms: SanityComparisonPlatform[] }) {
+  const sorted = [...platforms].sort((a, b) => {
+    if (a.isWinner && !b.isWinner) return -1;
+    if (!a.isWinner && b.isWinner) return 1;
+    return b.overallScore - a.overallScore;
+  });
+
+  return (
+    <div className="lg:hidden flex flex-col gap-4 py-8">
+      {sorted.map((platform) => (
+        <div
+          key={platform.name}
+          className="border border-[#d8d4cc] overflow-hidden"
+          style={{ borderWidth: "0.5px" }}
+        >
+          {/* Top-pick badge — only on the actual winner */}
+          {platform.isWinner && (
+            <div className="px-4 pt-4 pb-2">
+              <span
+                style={{
+                  display: "inline-block",
+                  background: "#326891",
+                  color: "#fff",
+                  fontSize: "9px",
+                  fontWeight: 600,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  padding: "0.25rem 0.65rem",
+                  borderRadius: "999px",
+                }}
+              >
+                Top pick
+              </span>
+            </div>
+          )}
+
+          {/* Card body */}
+          <div
+            style={{
+              padding: "1.25rem",
+              paddingTop: platform.isWinner ? "0.5rem" : "1.25rem",
+            }}
+          >
+            {/* Name */}
+            <p
+              className="text-[#1a1a1a] font-semibold"
+              style={{ fontSize: "15px", marginBottom: "2px" }}
+            >
+              {platform.url ? (
+                <a
+                  href={platform.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#326891] transition-colors"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  {platform.name}
+                </a>
+              ) : (
+                platform.name
+              )}
+            </p>
+
+            {platform.platformType && (
+              <p
+                className="uppercase tracking-wide text-[#888]"
+                style={{ fontSize: "9px", letterSpacing: "0.08em", marginBottom: "0.75rem" }}
+              >
+                {platform.platformType}
+              </p>
+            )}
+
+            {/* Overall score */}
+            <div className="flex items-baseline gap-1" style={{ marginBottom: "0.875rem" }}>
+              <span
+                className="font-serif font-bold text-[#1a3a52]"
+                style={{ fontSize: platform.isWinner ? "32px" : "24px" }}
+              >
+                {platform.overallScore.toFixed(1)}
+              </span>
+              <span className="text-[#326891] font-medium" style={{ fontSize: "13px" }}>
+                &thinsp;/ 5.0
+              </span>
+            </div>
+
+            {/* Dimension score bars */}
+            {platform.scores.map((s: SanityComparisonScore) => (
+              <ScoreRow
+                key={s.dimension}
+                dimension={s.dimension}
+                value={s.value}
+                compact={!platform.isWinner}
+              />
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <div className="text-center">
         <Link
           href="/how-we-score"
           className="text-[#326891] hover:underline"
@@ -630,7 +749,7 @@ export default async function ReviewPage({ params }: PageProps) {
         {/* Headline */}
         <h1
           className="font-serif text-[#1a1a1a] leading-tight mb-5"
-          style={{ fontSize: "clamp(26px, 4vw, 36px)", maxWidth: "780px" }}
+          style={{ fontSize: "clamp(28px, 4vw, 42px)", maxWidth: "780px" }}
         >
           {article.title}
         </h1>
@@ -676,20 +795,24 @@ export default async function ReviewPage({ params }: PageProps) {
         )}
       </div>
 
-      {/* ── 3. Content grid ───────────────────────────────────────────── */}
+      {/* ── 3. Mobile comparison stack (hidden on lg+) ───────────────── */}
+      {Array.isArray(article.comparisonPlatforms) &&
+        article.comparisonPlatforms.length > 0 && (
+          <MobileComparisonStack platforms={article.comparisonPlatforms} />
+        )}
+
+      {/* ── 4. Content grid ───────────────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px] gap-12 pt-12 pb-16">
 
         {/* Left — article body */}
-        <div>
-          <div style={{ maxWidth: "640px" }}>
-            {article.body && article.body.length > 0 ? (
-              <PortableText value={article.body} components={ptComponents} />
-            ) : (
-              <p className="text-[#888] italic" style={{ fontSize: "15px" }}>
-                Body content coming soon.
-              </p>
-            )}
-          </div>
+        <div style={{ maxWidth: "640px" }}>
+          {article.body && article.body.length > 0 ? (
+            <PortableText value={article.body} components={ptComponents} />
+          ) : (
+            <p className="text-[#888] italic" style={{ fontSize: "15px" }}>
+              Body content coming soon.
+            </p>
+          )}
         </div>
 
         {/* Right — sticky sidebar (desktop only)
