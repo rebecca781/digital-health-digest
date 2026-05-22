@@ -18,14 +18,8 @@ const config: Config = {
         "border-base":  "#d8d4cc",
       },
       fontFamily: {
-        serif: ["Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
-        sans: [
-          "Inter",
-          "ui-sans-serif",
-          "system-ui",
-          "-apple-system",
-          "sans-serif",
-        ],
+        serif: ["var(--font-playfair)", "Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
+        sans: ["var(--font-inter)", "Inter", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
       },
     },
   },
