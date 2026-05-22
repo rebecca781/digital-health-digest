@@ -328,65 +328,76 @@ function ScoreRow({
 // ─── Comparison sidebar (multi-platform) ─────────────────────────────────────
 
 function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[] }) {
-  // winner = first platform marked isWinner, else first in array
-  const winner = platforms.find((p) => p.isWinner) ?? platforms[0];
-  const others = platforms.filter((p) => p !== winner);
+  // Sort: isWinner === true always first, then by overallScore descending.
+  // Use a stable copy so we never mutate the prop.
+  const sorted = [...platforms].sort((a, b) => {
+    if (a.isWinner && !b.isWinner) return -1;
+    if (!a.isWinner && b.isWinner) return 1;
+    return b.overallScore - a.overallScore;
+  });
+
+  const [first, ...rest] = sorted;
 
   return (
     <div
       className="border border-[#d8d4cc] overflow-hidden"
       style={{ borderWidth: "0.5px" }}
     >
-      {/* ── Top-pick badge ────────────────────────────────── */}
-      <div className="px-5 pt-5 pb-3">
-        <span
-          style={{
-            display: "inline-block",
-            background: "#326891",
-            color: "#fff",
-            fontSize: "9px",
-            fontWeight: 600,
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            padding: "0.25rem 0.65rem",
-            borderRadius: "999px",
-          }}
-        >
-          Top pick
-        </span>
-      </div>
+      {/* ── Top-pick badge — only when the first item is the actual winner ── */}
+      {first.isWinner && (
+        <div className="px-5 pt-5 pb-3">
+          <span
+            style={{
+              display: "inline-block",
+              background: "#326891",
+              color: "#fff",
+              fontSize: "9px",
+              fontWeight: 600,
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              padding: "0.25rem 0.65rem",
+              borderRadius: "999px",
+            }}
+          >
+            Top pick
+          </span>
+        </div>
+      )}
 
-      {/* ── Winner card ───────────────────────────────────── */}
-      <div className="px-5 pb-5">
-        {/* Name + type */}
+      {/* ── First (winner) card ───────────────────────────── */}
+      <div
+        className="px-5 pb-5"
+        style={{ paddingTop: first.isWinner ? undefined : "1.25rem" }}
+      >
+        {/* Name + platform type */}
         <p
           className="text-[#1a1a1a] font-semibold"
           style={{ fontSize: "15px", marginBottom: "2px" }}
         >
-          {winner.url ? (
+          {first.url ? (
             <a
-              href={winner.url}
+              href={first.url}
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-[#326891] transition-colors"
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              {winner.name}
+              {first.name}
             </a>
           ) : (
-            winner.name
+            first.name
           )}
         </p>
-        {winner.platformType && (
+        {first.platformType && (
           <p
             className="uppercase tracking-wide text-[#888]"
             style={{ fontSize: "9px", letterSpacing: "0.08em", marginBottom: "0.6rem" }}
           >
-            {winner.platformType}
+            {first.platformType}
           </p>
         )}
 
-        {/* Overall score */}
+        {/* Overall score box */}
         <div
           className="rounded-[6px] bg-[#e8f1f7] px-4 py-4 text-center"
           style={{ marginBottom: "1rem" }}
@@ -396,7 +407,7 @@ function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[
               className="font-serif font-bold text-[#1a3a52]"
               style={{ fontSize: "42px" }}
             >
-              {winner.overallScore.toFixed(1)}
+              {first.overallScore.toFixed(1)}
             </span>
             <span className="text-[#326891] font-medium" style={{ fontSize: "14px" }}>
               &thinsp;/ 5.0
@@ -410,8 +421,8 @@ function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[
           </p>
         </div>
 
-        {/* Dimension bars */}
-        {winner.scores.map((s: SanityComparisonScore) => (
+        {/* Dimension bars — full size */}
+        {first.scores.map((s: SanityComparisonScore) => (
           <ScoreRow
             key={s.dimension}
             dimension={s.dimension}
@@ -421,14 +432,14 @@ function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[
         ))}
       </div>
 
-      {/* ── Other platforms ───────────────────────────────── */}
-      {others.length > 0 && (
+      {/* ── Remaining platforms ───────────────────────────── */}
+      {rest.length > 0 && (
         <>
           <div
             className="border-t border-[#d8d4cc]"
             style={{ borderTopWidth: "0.5px" }}
           />
-          {/* Divider label */}
+          {/* Section label */}
           <div className="px-5 py-2.5 text-center">
             <span
               className="uppercase tracking-widest text-[#888]"
@@ -438,14 +449,15 @@ function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[
             </span>
           </div>
 
-          {others.map((platform) => (
+          {/* Loop through every remaining platform */}
+          {rest.map((platform) => (
             <div key={platform.name}>
               <div
                 className="border-t border-[#d8d4cc]"
                 style={{ borderTopWidth: "0.5px" }}
               />
               <div className="px-5 py-4">
-                {/* Name row with overall score */}
+                {/* Name + score inline */}
                 <div
                   className="flex items-start justify-between gap-2"
                   style={{ marginBottom: "0.6rem" }}
@@ -486,7 +498,7 @@ function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[
                   </span>
                 </div>
 
-                {/* Dimension bars (compact) */}
+                {/* Dimension bars — compact */}
                 {platform.scores.map((s: SanityComparisonScore) => (
                   <ScoreRow
                     key={s.dimension}
@@ -501,7 +513,7 @@ function ComparisonSidebar({ platforms }: { platforms: SanityComparisonPlatform[
         </>
       )}
 
-      {/* ── How we score link ─────────────────────────────── */}
+      {/* ── How we score footer link ──────────────────────── */}
       <div
         className="border-t border-[#d8d4cc] px-5 py-3 text-center"
         style={{ borderTopWidth: "0.5px" }}
@@ -681,18 +693,26 @@ export default async function ReviewPage({ params }: PageProps) {
         </div>
 
         {/* Right — sticky sidebar (desktop only)
-            Priority: comparisonPlatforms → scorecard → nothing */}
-        {(article.comparisonPlatforms?.length || article.scorecard) ? (
-          <aside className="hidden lg:block">
-            <div className="sticky" style={{ top: "2rem" }}>
-              {article.comparisonPlatforms && article.comparisonPlatforms.length > 0 ? (
-                <ComparisonSidebar platforms={article.comparisonPlatforms} />
-              ) : article.scorecard ? (
-                <ScorecardSidebar sc={article.scorecard} />
-              ) : null}
-            </div>
-          </aside>
-        ) : null}
+            Priority: comparisonPlatforms (non-empty array) → scorecard → nothing.
+            Array.isArray guard ensures null/undefined from GROQ never slips through. */}
+        {(() => {
+          const hasComparisons =
+            Array.isArray(article.comparisonPlatforms) &&
+            article.comparisonPlatforms.length > 0;
+          const hasSidebar = hasComparisons || Boolean(article.scorecard);
+          if (!hasSidebar) return null;
+          return (
+            <aside className="hidden lg:block">
+              <div className="sticky" style={{ top: "2rem" }}>
+                {hasComparisons ? (
+                  <ComparisonSidebar platforms={article.comparisonPlatforms!} />
+                ) : (
+                  <ScorecardSidebar sc={article.scorecard!} />
+                )}
+              </div>
+            </aside>
+          );
+        })()}
       </div>
 
       {/* ── 4. Editorial independence note ───────────────────────────── */}
