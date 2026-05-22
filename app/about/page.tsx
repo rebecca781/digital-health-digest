@@ -20,24 +20,24 @@ export async function generateMetadata() {
 const ptComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="text-[#333333] leading-relaxed text-base mb-5">{children}</p>
+      <p className="text-[#4a4a4a] leading-relaxed text-base mb-5">{children}</p>
     ),
     h2: ({ children }) => (
-      <h2 className="font-serif text-xl text-[#111111] mt-10 mb-4">{children}</h2>
+      <h2 className="font-serif text-xl text-[#1a1a1a] mt-10 mb-4">{children}</h2>
     ),
     h3: ({ children }) => (
-      <h3 className="font-serif text-lg text-[#111111] mt-8 mb-3">{children}</h3>
+      <h3 className="font-serif text-lg text-[#1a1a1a] mt-8 mb-3">{children}</h3>
     ),
   },
   marks: {
     strong: ({ children }) => (
-      <strong className="font-semibold text-[#111111]">{children}</strong>
+      <strong className="font-semibold text-[#1a1a1a]">{children}</strong>
     ),
     em: ({ children }) => <em className="italic">{children}</em>,
     link: ({ value, children }) => (
       <a
         href={value?.href}
-        className="text-[#3B6D11] underline underline-offset-2 hover:text-[#27500A] transition-colors"
+        className="text-[#326891] underline underline-offset-2 hover:text-[#1a3a52] transition-colors"
         target={value?.href?.startsWith("http") ? "_blank" : undefined}
         rel={value?.href?.startsWith("http") ? "noopener noreferrer" : undefined}
       >
@@ -47,12 +47,11 @@ const ptComponents: PortableTextComponents = {
   },
 };
 
-// Placeholder shown before the Sanity document is published
 const PLACEHOLDER: SanityAboutPage = {
   pageTitle: "About The Digital Health Digest",
   tagline:
     "Independent editorial reviews of direct-to-consumer telehealth brands — so you can make smarter decisions about your care.",
-  image: null,   // kept on type for Studio; not rendered by this page
+  image: null,
   imageAlt: null,
   body: [
     {
@@ -74,14 +73,7 @@ const PLACEHOLDER: SanityAboutPage = {
       _key: "p2",
       style: "h2",
       markDefs: [],
-      children: [
-        {
-          _type: "span",
-          _key: "s2",
-          text: "How we review",
-          marks: [],
-        },
-      ],
+      children: [{ _type: "span", _key: "s2", text: "How we review", marks: [] }],
     },
     {
       _type: "block",
@@ -102,14 +94,7 @@ const PLACEHOLDER: SanityAboutPage = {
       _key: "p4",
       style: "h2",
       markDefs: [],
-      children: [
-        {
-          _type: "span",
-          _key: "s4",
-          text: "Editorial standards",
-          marks: [],
-        },
-      ],
+      children: [{ _type: "span", _key: "s4", text: "Editorial standards", marks: [] }],
     },
     {
       _type: "block",
@@ -135,8 +120,8 @@ export default async function AboutPage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       {/* Breadcrumb */}
-      <p className="text-xs text-[#aaaaaa] mb-8">
-        <Link href="/" className="hover:text-[#3B6D11] transition-colors">
+      <p className="text-xs text-[#888] mb-8">
+        <Link href="/" className="hover:text-[#326891] transition-colors">
           Home
         </Link>{" "}
         / About
@@ -144,18 +129,17 @@ export default async function AboutPage() {
 
       {/* Title + tagline */}
       <div
-        className="pb-10 border-b border-[#e0e0e0] mb-12"
+        className="pb-10 border-b border-[#d8d4cc] mb-12"
         style={{ borderBottomWidth: "0.5px" }}
       >
-        <h1 className="font-serif text-4xl leading-snug text-[#111111] mb-4 max-w-2xl">
+        <h1 className="font-serif text-4xl leading-snug text-[#1a1a1a] mb-4 max-w-2xl">
           {page.pageTitle}
         </h1>
-        <p className="text-lg text-[#555555] leading-relaxed max-w-xl">
+        <p className="text-lg text-[#4a4a4a] leading-relaxed max-w-xl">
           {page.tagline}
         </p>
       </div>
 
-      {/* Body copy — single column, no image */}
       <div className="max-w-2xl">
         <PortableText value={page.body} components={ptComponents} />
       </div>

@@ -9,7 +9,7 @@ export default function CategoryTag({ label, slug }: CategoryTagProps) {
   return (
     <Link
       href={`/category/${slug}`}
-      className="inline-block text-xs font-medium uppercase tracking-wider text-[#3B6D11] hover:underline"
+      className="inline-block text-xs font-medium uppercase tracking-wider text-[#326891] hover:underline"
     >
       {label}
     </Link>

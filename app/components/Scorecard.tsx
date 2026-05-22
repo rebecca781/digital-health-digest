@@ -8,16 +8,10 @@ function RatingBar({ rating }: { rating: number }) {
   const pct = (rating / 10) * 100;
   return (
     <div className="flex items-center gap-3">
-      <div
-        className="flex-1 h-1 bg-[#e8e8e8]"
-        role="presentation"
-      >
-        <div
-          className="h-full bg-[#3B6D11]"
-          style={{ width: `${pct}%` }}
-        />
+      <div className="flex-1 h-1 bg-[#e8e8e8]" role="presentation">
+        <div className="h-full bg-[#326891]" style={{ width: `${pct}%` }} />
       </div>
-      <span className="text-sm font-semibold text-[#111111] tabular-nums w-8 text-right">
+      <span className="text-sm font-semibold text-[#1a1a1a] tabular-nums w-8 text-right">
         {rating.toFixed(1)}
       </span>
     </div>
@@ -27,27 +21,27 @@ function RatingBar({ rating }: { rating: number }) {
 export default function Scorecard({ scorecard }: ScorecardProps) {
   return (
     <div
-      className="border border-[#d0d0d0] max-w-2xl mb-10"
+      className="border border-[#d8d4cc] max-w-2xl mb-10"
       style={{ borderWidth: "0.5px" }}
     >
       {/* Header bar */}
-      <div className="bg-[#3B6D11] px-5 py-3 flex items-center justify-between gap-4">
+      <div className="bg-[#326891] px-5 py-3 flex items-center justify-between gap-4">
         <div className="flex items-center gap-2.5">
-          <span className="text-[10px] uppercase tracking-widest font-medium text-[#a8cc78]">
+          <span className="text-[10px] uppercase tracking-widest font-medium text-[#a8c8e0]">
             Our Pick
           </span>
-          <span className="text-[10px] text-[#6aaa2a]">—</span>
+          <span className="text-[10px] text-[#7aaec8]">—</span>
           <span className="text-sm font-semibold text-white">
             {scorecard.winner}
           </span>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
-          <span className="text-[10px] uppercase tracking-widest text-[#a8cc78]">
+          <span className="text-[10px] uppercase tracking-widest text-[#a8c8e0]">
             Overall
           </span>
           <span className="text-sm font-bold text-white tabular-nums">
             {scorecard.overallRating.toFixed(1)}
-            <span className="text-[10px] font-normal text-[#a8cc78]">/10</span>
+            <span className="text-[10px] font-normal text-[#a8c8e0]">/10</span>
           </span>
         </div>
       </div>
@@ -62,7 +56,7 @@ export default function Scorecard({ scorecard }: ScorecardProps) {
           className="px-5 py-4 border-r border-[#e8e8e8]"
           style={{ borderRightWidth: "0.5px" }}
         >
-          <p className="text-[10px] uppercase tracking-widest text-[#aaaaaa] mb-2">
+          <p className="text-[10px] uppercase tracking-widest text-[#888] mb-2">
             Rating
           </p>
           <RatingBar rating={scorecard.overallRating} />
@@ -73,17 +67,17 @@ export default function Scorecard({ scorecard }: ScorecardProps) {
           className="px-5 py-4 border-r border-[#e8e8e8]"
           style={{ borderRightWidth: "0.5px" }}
         >
-          <p className="text-[10px] uppercase tracking-widest text-[#aaaaaa] mb-1.5">
+          <p className="text-[10px] uppercase tracking-widest text-[#888] mb-1.5">
             Best For
           </p>
-          <p className="text-xs text-[#333333] leading-snug">
+          <p className="text-xs text-[#4a4a4a] leading-snug">
             {scorecard.bestFor}
           </p>
         </div>
 
         {/* Price tier */}
         <div className="px-5 py-4">
-          <p className="text-[10px] uppercase tracking-widest text-[#aaaaaa] mb-1.5">
+          <p className="text-[10px] uppercase tracking-widest text-[#888] mb-1.5">
             Price Tier
           </p>
           <div className="flex items-center gap-0.5">
@@ -93,7 +87,7 @@ export default function Scorecard({ scorecard }: ScorecardProps) {
                 <span
                   key={i}
                   className={`text-sm font-semibold ${
-                    filled ? "text-[#3B6D11]" : "text-[#dddddd]"
+                    filled ? "text-[#326891]" : "text-[#dddddd]"
                   }`}
                 >
                   {sign}
@@ -111,14 +105,14 @@ export default function Scorecard({ scorecard }: ScorecardProps) {
           className="px-5 py-5 sm:border-r border-[#e8e8e8]"
           style={{ borderRightWidth: "0.5px" }}
         >
-          <p className="text-[10px] uppercase tracking-widest font-medium text-[#3B6D11] mb-3">
+          <p className="text-[10px] uppercase tracking-widest font-medium text-[#326891] mb-3">
             Pros
           </p>
           <ul className="flex flex-col gap-2">
             {scorecard.pros.map((pro, i) => (
-              <li key={i} className="flex items-start gap-2.5 text-sm text-[#333333]">
+              <li key={i} className="flex items-start gap-2.5 text-sm text-[#4a4a4a]">
                 <span
-                  className="mt-0.5 w-3.5 h-3.5 shrink-0 rounded-full bg-[#EAF3DE] flex items-center justify-center"
+                  className="mt-0.5 w-3.5 h-3.5 shrink-0 rounded-full bg-[#e8f1f7] flex items-center justify-center"
                   aria-hidden="true"
                 >
                   <svg
@@ -130,7 +124,7 @@ export default function Scorecard({ scorecard }: ScorecardProps) {
                   >
                     <path
                       d="M1 3L2.8 5L6 1"
-                      stroke="#3B6D11"
+                      stroke="#326891"
                       strokeWidth="1.2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -148,12 +142,12 @@ export default function Scorecard({ scorecard }: ScorecardProps) {
           className="px-5 py-5 border-t border-[#e8e8e8] sm:border-t-0"
           style={{ borderTopWidth: "0.5px" }}
         >
-          <p className="text-[10px] uppercase tracking-widest font-medium text-[#999999] mb-3">
+          <p className="text-[10px] uppercase tracking-widest font-medium text-[#888] mb-3">
             Cons
           </p>
           <ul className="flex flex-col gap-2">
             {scorecard.cons.map((con, i) => (
-              <li key={i} className="flex items-start gap-2.5 text-sm text-[#555555]">
+              <li key={i} className="flex items-start gap-2.5 text-sm text-[#4a4a4a]">
                 <span
                   className="mt-0.5 w-3.5 h-3.5 shrink-0 rounded-full bg-[#f5f5f5] flex items-center justify-center"
                   aria-hidden="true"

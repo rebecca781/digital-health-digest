@@ -13,7 +13,7 @@ export default function ContactPage() {
     <div className="max-w-6xl mx-auto px-6 py-12">
       {/* Breadcrumb */}
       <p className="text-xs text-[#aaaaaa] mb-8">
-        <Link href="/" className="hover:text-[#3B6D11] transition-colors">
+        <Link href="/" className="hover:text-[#326891] transition-colors">
           Home
         </Link>{" "}
         / Contact

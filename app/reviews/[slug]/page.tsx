@@ -38,17 +38,16 @@ export async function generateMetadata({ params }: PageProps) {
   };
 }
 
-/** Portable Text component overrides — matches the site's editorial style */
 const ptComponents: PortableTextComponents = {
   block: {
     normal: ({ children }) => (
-      <p className="text-[#333333] leading-relaxed text-base mb-5">{children}</p>
+      <p className="text-[#4a4a4a] leading-relaxed text-base mb-5">{children}</p>
     ),
     h2: ({ children }) => (
-      <h2 className="font-serif text-xl text-[#111111] mt-10 mb-4">{children}</h2>
+      <h2 className="font-serif text-xl text-[#1a1a1a] mt-10 mb-4">{children}</h2>
     ),
     h3: ({ children }) => (
-      <h3 className="font-serif text-lg text-[#111111] mt-8 mb-3">{children}</h3>
+      <h3 className="font-serif text-lg text-[#1a1a1a] mt-8 mb-3">{children}</h3>
     ),
   },
   marks: {
@@ -75,14 +74,14 @@ export default async function ReviewPage({ params }: PageProps) {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       {/* Breadcrumb */}
-      <p className="text-xs text-[#aaaaaa] mb-8">
-        <Link href="/" className="hover:text-[#3B6D11] transition-colors">
+      <p className="text-xs text-[#888] mb-8">
+        <Link href="/" className="hover:text-[#326891] transition-colors">
           Home
         </Link>{" "}
         /{" "}
         <Link
           href={`/category/${article.categorySlug}`}
-          className="hover:text-[#3B6D11] transition-colors"
+          className="hover:text-[#326891] transition-colors"
         >
           {article.category}
         </Link>{" "}
@@ -91,14 +90,14 @@ export default async function ReviewPage({ params }: PageProps) {
 
       <div className="max-w-2xl">
         <CategoryTag label={article.category} slug={article.categorySlug} />
-        <h1 className="font-serif text-4xl leading-snug text-[#111111] mt-3 mb-4">
+        <h1 className="font-serif text-4xl leading-snug text-[#1a1a1a] mt-3 mb-4">
           {article.title}
         </h1>
-        <p className="text-sm text-[#999999] mb-8">{formatDate(article.date)}</p>
+        <p className="text-sm text-[#888] mb-8">{formatDate(article.date)}</p>
       </div>
 
       {/* Hero image */}
-      <div className="w-full aspect-[16/7] bg-[#EAF3DE] flex items-center justify-center mb-12 overflow-hidden">
+      <div className="w-full aspect-[16/7] bg-[#f4f0e8] flex items-center justify-center mb-12 overflow-hidden">
         {article.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -107,9 +106,7 @@ export default async function ReviewPage({ params }: PageProps) {
             className="w-full h-full object-cover"
           />
         ) : (
-          <span className="text-[#3B6D11] text-xs uppercase tracking-widest font-medium">
-            Article image
-          </span>
+          <span className="bg-[#ece8de] w-14 h-14 rounded-full" aria-hidden="true" />
         )}
       </div>
 
@@ -117,50 +114,50 @@ export default async function ReviewPage({ params }: PageProps) {
       {article.scorecard && <Scorecard scorecard={article.scorecard} />}
 
       {/* Summary callout */}
-      <div className="max-w-2xl mb-10 border-l-2 border-[#3B6D11] pl-5 py-1">
-        <p className="text-base text-[#444444] leading-relaxed italic">
+      <div className="max-w-2xl mb-10 border-l-2 border-[#326891] pl-5 py-1">
+        <p className="text-base text-[#4a4a4a] leading-relaxed italic">
           {article.summary}
         </p>
       </div>
 
-      {/* Body — Portable Text */}
+      {/* Body */}
       <div className="max-w-2xl">
         {article.body && article.body.length > 0 ? (
           <PortableText value={article.body} components={ptComponents} />
         ) : (
-          <p className="text-sm text-[#aaaaaa] italic">Body content coming soon.</p>
+          <p className="text-sm text-[#888] italic">Body content coming soon.</p>
         )}
       </div>
 
       {/* Divider */}
       <div
-        className="border-t border-[#e0e0e0] my-16 max-w-2xl"
+        className="border-t border-[#d8d4cc] my-16 max-w-2xl"
         style={{ borderTopWidth: "0.5px" }}
       />
 
       {/* Related reviews */}
       {relatedArticles.length > 0 && (
         <section className="max-w-2xl">
-          <h2 className="text-xs uppercase tracking-widest font-medium text-[#999999] mb-6">
+          <h2 className="text-xs uppercase tracking-widest font-medium text-[#888] mb-6">
             More in {article.category}
           </h2>
           <div className="flex flex-col gap-6">
             {relatedArticles.map((r) => (
               <div
                 key={r.slug}
-                className="border-b border-[#eeeeee] pb-6"
+                className="border-b border-[#d8d4cc] pb-6"
                 style={{ borderBottomWidth: "0.5px" }}
               >
                 <CategoryTag label={r.category} slug={r.categorySlug} />
-                <h3 className="font-serif text-lg leading-snug text-[#111111] mt-1.5">
+                <h3 className="font-serif text-lg leading-snug text-[#1a1a1a] mt-1.5">
                   <Link
                     href={`/reviews/${r.slug}`}
-                    className="hover:text-[#3B6D11] transition-colors"
+                    className="hover:text-[#326891] transition-colors"
                   >
                     {r.title}
                   </Link>
                 </h3>
-                <p className="text-xs text-[#aaaaaa] mt-1">
+                <p className="text-xs text-[#888] mt-1">
                   {formatDate(r.date)}
                 </p>
               </div>

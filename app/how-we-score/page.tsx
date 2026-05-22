@@ -39,19 +39,19 @@ export default function HowWeScorePage() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       {/* Breadcrumb */}
-      <p className="text-xs text-[#aaaaaa] mb-8">
-        <Link href="/" className="hover:text-[#3B6D11] transition-colors">
+      <p className="text-xs text-[#888] mb-8">
+        <Link href="/" className="hover:text-[#326891] transition-colors">
           Home
         </Link>{" "}
         / How We Score
       </p>
 
       {/* Header */}
-      <div className="pb-10 border-b border-[#e0e0e0] mb-14" style={{ borderBottomWidth: "0.5px" }}>
-        <h1 className="font-serif text-4xl leading-snug text-[#111111] mb-4 max-w-2xl">
+      <div className="pb-10 border-b border-[#d8d4cc] mb-14" style={{ borderBottomWidth: "0.5px" }}>
+        <h1 className="font-serif text-4xl leading-snug text-[#1a1a1a] mb-4 max-w-2xl">
           How We Score
         </h1>
-        <p className="text-lg text-[#555555] leading-relaxed max-w-xl">
+        <p className="text-lg text-[#4a4a4a] leading-relaxed max-w-xl">
           Every review on The Digital Health Digest is based on the same criteria.
           Here&rsquo;s exactly how we evaluate telehealth platforms.
         </p>
@@ -64,15 +64,13 @@ export default function HowWeScorePage() {
             <li
               key={item.number}
               className={`flex gap-8 py-10 ${
-                i < criteria.length - 1
-                  ? "border-b border-[#eeeeee]"
-                  : ""
+                i < criteria.length - 1 ? "border-b border-[#d8d4cc]" : ""
               }`}
               style={i < criteria.length - 1 ? { borderBottomWidth: "0.5px" } : {}}
             >
-              {/* Number */}
+              {/* Number in accent blue */}
               <span
-                className="font-serif text-3xl leading-none text-[#3B6D11] select-none shrink-0 w-9 text-right"
+                className="font-serif text-3xl leading-none text-[#326891] select-none shrink-0 w-9 text-right"
                 aria-hidden="true"
               >
                 {item.number}
@@ -80,10 +78,10 @@ export default function HowWeScorePage() {
 
               {/* Text */}
               <div>
-                <h2 className="font-serif text-xl text-[#111111] mb-3">
+                <h2 className="font-serif text-xl text-[#1a1a1a] mb-3">
                   {item.title}
                 </h2>
-                <p className="text-[#444444] leading-relaxed text-base">
+                <p className="text-[#4a4a4a] leading-relaxed text-base">
                   {item.body}
                 </p>
               </div>
@@ -93,20 +91,20 @@ export default function HowWeScorePage() {
 
         {/* Independence note */}
         <div
-          className="mt-14 pt-10 border-t border-[#e0e0e0]"
+          className="mt-14 pt-10 border-t border-[#d8d4cc]"
           style={{ borderTopWidth: "0.5px" }}
         >
-          <p className="text-xs uppercase tracking-widest font-medium text-[#999999] mb-3">
+          <p className="text-xs uppercase tracking-widest font-medium text-[#888] mb-3">
             Editorial independence
           </p>
-          <p className="text-sm text-[#555555] leading-relaxed">
+          <p className="text-sm text-[#4a4a4a] leading-relaxed">
             The Digital Health Digest is editorially independent. We do not
             accept payment, free product, or any other form of compensation from
             the brands we review. Our only source of revenue is reader support.
             If you believe a review is inaccurate or out of date,{" "}
             <Link
               href="/contact"
-              className="text-[#3B6D11] underline underline-offset-2 hover:text-[#27500A] transition-colors"
+              className="text-[#326891] underline underline-offset-2 hover:text-[#1a3a52] transition-colors"
             >
               contact us
             </Link>

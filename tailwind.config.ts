@@ -9,9 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        "green-primary": "#3B6D11",
-        "green-light": "#EAF3DE",
-        "green-dark": "#27500A",
+        "accent":       "#326891",
+        "accent-light": "#e8f1f7",
+        "accent-dark":  "#1a3a52",
+        "surface":      "#fdfaf5",
+        "surface-2":    "#f4f0e8",
+        "surface-3":    "#ece8de",
+        "border-base":  "#d8d4cc",
       },
       fontFamily: {
         serif: ["Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],

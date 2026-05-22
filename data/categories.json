@@ -40,5 +40,11 @@
     "slug": "dermatology",
     "count": 1,
     "icon": "✦"
+  },
+  {
+    "label": "Compounding",
+    "slug": "compounding",
+    "count": 0,
+    "icon": "⊕"
   }
 ]
