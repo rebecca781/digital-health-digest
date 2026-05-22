@@ -51,6 +51,68 @@ export async function generateMetadata({ params }: PageProps) {
 
 const ptComponents: PortableTextComponents = {
   block: {
+    // ── Dimension heading ─────────────────────────────────────────────────────
+    // Renders as: LABEL  score  ─────────────────────
+    // The editor types the full line as plain text, e.g. "Clinical quality 4.8 / 5"
+    // We extract raw text from value.children (Sanity span array) so we can parse
+    // and split into label + score before the React render tree is involved.
+    dimensionHeading: ({ value }) => {
+      // Pull plain text from each child span in the raw Sanity block
+      type RawSpan = { text?: string };
+      const spans = (value as unknown as { children?: RawSpan[] }).children ?? [];
+      const fullText = spans.map((s) => s.text ?? "").join("").trim();
+
+      // Match a trailing score like "4.8 / 5" or "4 / 5" or "4.8/5"
+      // Captures: (1) label  (2) score
+      const scoreRe = /^(.*?)\s{1,4}(\d[\d.]*\s*\/\s*[\d.]+)\s*$/;
+      const m = fullText.match(scoreRe);
+      const label = m ? m[1].trim() : fullText;
+      const score = m ? m[2].trim() : null;
+
+      return (
+        <div
+          className="flex items-center gap-2 mt-8 mb-3"
+          style={{ width: "100%" }}
+        >
+          {/* Dimension label */}
+          <span
+            style={{
+              fontSize: "10px",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: "#326891",
+              fontWeight: 500,
+              whiteSpace: "nowrap",
+            }}
+          >
+            {label}
+          </span>
+
+          {/* Score value — only rendered when a score was parsed */}
+          {score && (
+            <span
+              style={{
+                fontSize: "10px",
+                color: "#888",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {score}
+            </span>
+          )}
+
+          {/* Ruled line fills remaining width */}
+          <div
+            style={{
+              flex: 1,
+              borderTop: "0.5px solid #d8d4cc",
+              minWidth: "0.5rem",
+            }}
+          />
+        </div>
+      );
+    },
+
     normal: ({ children }) => (
       <p
         className="mb-6 text-[#1a1a1a]"

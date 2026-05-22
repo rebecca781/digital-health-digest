@@ -280,10 +280,11 @@ export const articleType = defineType({
         {
           type: "block",
           styles: [
-            { title: "Paragraph",  value: "normal"     },
-            { title: "Heading 2",  value: "h2"         },
-            { title: "Heading 3",  value: "h3"         },
-            { title: "Pull quote", value: "blockquote" },
+            { title: "Paragraph",        value: "normal"           },
+            { title: "Heading 2",        value: "h2"               },
+            { title: "Heading 3",        value: "h3"               },
+            { title: "Pull quote",       value: "blockquote"       },
+            { title: "Dimension heading", value: "dimensionHeading" },
           ],
           marks: {
             decorators: [
