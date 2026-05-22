@@ -11,8 +11,7 @@ const ARTICLE_FIELDS = groq`
   summary,
   featured,
   mostRead,
-  "image": image.asset->url,
-  scorecard
+  "image": image.asset->url
 `;
 
 const ARTICLE_FIELDS_WITH_BODY = groq`

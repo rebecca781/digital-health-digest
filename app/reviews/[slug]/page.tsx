@@ -13,7 +13,6 @@ import {
 import type {
   SanityArticle,
   SanityArticleWithBody,
-  SanityScorecard,
   SanityComparisonPlatform,
   SanityComparisonScore,
 } from "@/types/sanity";
@@ -172,172 +171,6 @@ const ptComponents: PortableTextComponents = {
     ),
   },
 };
-
-// ─── Per-category score rows ──────────────────────────────────────────────────
-
-const CATEGORY_SCORES: {
-  key: keyof Pick<
-    SanityScorecard,
-    "clinicalQuality" | "pricing" | "privacy" | "patientExperience" | "ongoingCare"
-  >;
-  label: string;
-}[] = [
-  { key: "clinicalQuality",   label: "Clinical quality"   },
-  { key: "pricing",           label: "Pricing"            },
-  { key: "privacy",           label: "Privacy"            },
-  { key: "patientExperience", label: "Patient experience" },
-  { key: "ongoingCare",       label: "Ongoing care"       },
-];
-
-// ─── Scorecard sidebar (desktop right column) ─────────────────────────────────
-
-function ScorecardSidebar({ sc }: { sc: SanityScorecard }) {
-  // overallRating is stored 0–10; display as /5.0
-  const displayScore = (sc.overallRating / 2).toFixed(1);
-
-  return (
-    <div
-      className="border border-[#d8d4cc] overflow-hidden"
-      style={{ borderWidth: "0.5px" }}
-    >
-      {/* Overall score */}
-      <div className="px-5 pt-5 pb-4">
-        <div
-          className="rounded-[6px] bg-[#e8f1f7] px-5 py-5 text-center"
-        >
-          <div className="flex items-baseline justify-center gap-1 leading-none">
-            <span
-              className="font-serif font-bold text-[#1a3a52]"
-              style={{ fontSize: "48px" }}
-            >
-              {displayScore}
-            </span>
-            <span className="text-base text-[#326891] font-medium">
-              &thinsp;/ 5.0
-            </span>
-          </div>
-          <p className="text-[10px] uppercase tracking-widest text-[#326891] mt-2.5">
-            Overall score
-          </p>
-        </div>
-      </div>
-
-      <div className="border-t border-[#d8d4cc]" style={{ borderTopWidth: "0.5px" }} />
-
-      {/* Per-category scores */}
-      <div className="px-5 py-4 flex flex-col gap-3.5">
-        {CATEGORY_SCORES.map(({ key, label }) => {
-          const score = sc[key] ?? 0;
-          const pct = Math.min((score / 5) * 100, 100);
-          return (
-            <div key={key}>
-              <div className="flex items-center justify-between mb-1">
-                <span className="text-[11px] uppercase tracking-wide text-[#888]">
-                  {label}
-                </span>
-                <span
-                  className="text-[#1a3a52] tabular-nums"
-                  style={{ fontSize: "13px" }}
-                >
-                  {score.toFixed(1)}
-                </span>
-              </div>
-              <div
-                className="w-full bg-[#e8f1f7]"
-                style={{ height: "4px" }}
-              >
-                <div
-                  className="h-full bg-[#326891]"
-                  style={{ width: `${pct}%` }}
-                />
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="border-t border-[#d8d4cc]" style={{ borderTopWidth: "0.5px" }} />
-
-      {/* Meta rows */}
-      <div className="px-5 py-4 flex flex-col gap-3">
-        {[
-          { label: "Winner",     value: sc.winner    },
-          { label: "Best for",   value: sc.bestFor   },
-          { label: "Price tier", value: sc.priceTier },
-        ].map(({ label, value }) => (
-          <div key={label} className="flex items-start justify-between gap-3">
-            <span className="text-[10px] uppercase tracking-widest text-[#888] pt-0.5 shrink-0">
-              {label}
-            </span>
-            <span
-              className="font-semibold text-[#1a1a1a] text-right"
-              style={{ fontSize: "13px" }}
-            >
-              {value}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <div className="border-t border-[#d8d4cc]" style={{ borderTopWidth: "0.5px" }} />
-
-      {/* Pros */}
-      <div className="px-5 pt-4 pb-3">
-        <p className="text-[10px] uppercase tracking-widest text-[#326891] mb-2.5">
-          Pros
-        </p>
-        <ul className="flex flex-col gap-1.5">
-          {sc.pros.map((pro, i) => (
-            <li
-              key={i}
-              className="flex items-start gap-2 text-[#1a1a1a]"
-              style={{ fontSize: "12px", lineHeight: "1.5" }}
-            >
-              <span className="text-[#326891] shrink-0 font-medium leading-snug">
-                +
-              </span>
-              {pro}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Cons */}
-      <div className="px-5 pt-3 pb-4 border-t border-[#d8d4cc]" style={{ borderTopWidth: "0.5px" }}>
-        <p className="text-[10px] uppercase tracking-widest text-[#888] mb-2.5">
-          Cons
-        </p>
-        <ul className="flex flex-col gap-1.5">
-          {sc.cons.map((con, i) => (
-            <li
-              key={i}
-              className="flex items-start gap-2 text-[#4a4a4a]"
-              style={{ fontSize: "12px", lineHeight: "1.5" }}
-            >
-              <span className="text-[#888] shrink-0 font-medium leading-snug">
-                −
-              </span>
-              {con}
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="border-t border-[#d8d4cc]" style={{ borderTopWidth: "0.5px" }} />
-
-      {/* How we score */}
-      <div className="px-5 py-3 text-center">
-        <Link
-          href="/how-we-score"
-          className="text-[#326891] hover:underline"
-          style={{ fontSize: "11px" }}
-        >
-          How we score →
-        </Link>
-      </div>
-    </div>
-  );
-}
 
 // ─── Comparison sidebar helpers ──────────────────────────────────────────────
 
@@ -744,16 +577,9 @@ function RelatedCard({ article }: { article: SanityArticle }) {
           {article.title}
         </Link>
       </h3>
-      <div className="flex items-center gap-3 flex-wrap">
-        {article.scorecard && (
-          <span className="inline-block bg-[#e8f1f7] text-[#1a3a52] font-medium px-2 py-0.5" style={{ fontSize: "11px" }}>
-            {(article.scorecard.overallRating / 2).toFixed(1)}&thinsp;/&thinsp;5.0
-          </span>
-        )}
-        <p className="text-[#888]" style={{ fontSize: "12px" }}>
-          {formatDate(article.date)}
-        </p>
-      </div>
+      <p className="text-[#888]" style={{ fontSize: "12px" }}>
+        {formatDate(article.date)}
+      </p>
     </div>
   );
 }
@@ -877,27 +703,16 @@ export default async function ReviewPage({ params }: PageProps) {
           )}
         </div>
 
-        {/* Right — sticky sidebar (desktop only)
-            Priority: comparisonPlatforms (non-empty array) → scorecard → nothing.
-            Array.isArray guard ensures null/undefined from GROQ never slips through. */}
-        {(() => {
-          const hasComparisons =
-            Array.isArray(article.comparisonPlatforms) &&
-            article.comparisonPlatforms.length > 0;
-          const hasSidebar = hasComparisons || Boolean(article.scorecard);
-          if (!hasSidebar) return null;
-          return (
+        {/* Right — sticky sidebar (desktop only).
+            Only renders when comparisonPlatforms is a non-empty array. */}
+        {Array.isArray(article.comparisonPlatforms) &&
+          article.comparisonPlatforms.length > 0 && (
             <aside className="hidden lg:block">
               <div className="sticky" style={{ top: "2rem" }}>
-                {hasComparisons ? (
-                  <ComparisonSidebar platforms={article.comparisonPlatforms!} />
-                ) : (
-                  <ScorecardSidebar sc={article.scorecard!} />
-                )}
+                <ComparisonSidebar platforms={article.comparisonPlatforms} />
               </div>
             </aside>
-          );
-        })()}
+          )}
       </div>
 
       {/* ── 4. Editorial independence note ───────────────────────────── */}

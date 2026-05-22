@@ -16,23 +16,6 @@ export interface SanityComparisonPlatform {
   scores: SanityComparisonScore[];
 }
 
-// ── Single-platform scorecard (existing) ────────────────────────────────────
-
-export interface SanityScorecard {
-  winner: string;
-  overallRating: number;  // stored 0–10; displayed as /5.0 (÷2)
-  bestFor: string;
-  priceTier: string;
-  pros: string[];
-  cons: string[];
-  // Per-category scores — 0–5 scale, optional for backwards compat
-  clinicalQuality?: number;
-  pricing?: number;
-  privacy?: number;
-  patientExperience?: number;
-  ongoingCare?: number;
-}
-
 /** Article shape returned by listing queries (no body) */
 export interface SanityArticle {
   slug: string;
@@ -44,7 +27,6 @@ export interface SanityArticle {
   featured: boolean;
   mostRead: boolean;
   image: string | null;
-  scorecard: SanityScorecard | null;
 }
 
 /** Article shape returned by the single-article query (includes body + comparison) */

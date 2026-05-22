@@ -137,26 +137,8 @@ export default async function HomePage() {
                     {hero.summary}
                   </p>
 
-                  {/* Score badge + date */}
-                  <div
-                    className="flex items-center flex-wrap gap-3"
-                    style={{ marginBottom: "1rem" }}
-                  >
-                    {hero.scorecard && (
-                      <span
-                        style={{
-                          background: "#e8f1f7",
-                          color: "#1a3a52",
-                          fontSize: "13px",
-                          fontWeight: 500,
-                          padding: "0.3rem 0.6rem",
-                          borderRadius: "4px",
-                          display: "inline-block",
-                        }}
-                      >
-                        {(hero.scorecard.overallRating / 2).toFixed(1)}&thinsp;/&thinsp;5.0
-                      </span>
-                    )}
+                  {/* Date */}
+                  <div style={{ marginBottom: "1rem" }}>
                     <span style={{ fontSize: "10px", color: "#888" }}>
                       {formatDate(hero.date)}
                     </span>
@@ -385,27 +367,10 @@ export default async function HomePage() {
                       </Link>
                     </h3>
 
-                    {/* Score + date */}
-                    <div className="flex items-center gap-2 flex-wrap">
-                      {article.scorecard && (
-                        <span
-                          style={{
-                            background: "#e8f1f7",
-                            color: "#1a3a52",
-                            fontSize: "11px",
-                            fontWeight: 500,
-                            padding: "0.2rem 0.5rem",
-                            borderRadius: "4px",
-                            display: "inline-block",
-                          }}
-                        >
-                          {(article.scorecard.overallRating / 2).toFixed(1)}&thinsp;/&thinsp;5.0
-                        </span>
-                      )}
-                      <span style={{ fontSize: "10px", color: "#888" }}>
-                        {formatDate(article.date)}
-                      </span>
-                    </div>
+                    {/* Date */}
+                    <span style={{ fontSize: "10px", color: "#888" }}>
+                      {formatDate(article.date)}
+                    </span>
                   </div>
                 </div>
               ))}
