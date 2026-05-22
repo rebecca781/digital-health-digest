@@ -4,10 +4,10 @@ import { useState } from "react";
 import Link from "next/link";
 
 const NAV_LINKS = [
-  { label: "Reviews",       href: "/category/all"  },
-  { label: "Categories",    href: "/category/all"  },
-  { label: "How We Score",  href: "/how-we-score"  },
-  { label: "About",         href: "/about"         },
+  { label: "About",        href: "/about"         },
+  { label: "How We Score", href: "/how-we-score"  },
+  { label: "Reviews",      href: "/category/all"  },
+  { label: "Contact",      href: "/contact"       },
 ];
 
 export default function Nav() {

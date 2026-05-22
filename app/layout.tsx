@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import Nav from "./components/Nav";
 import Footer from "./components/Footer";
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-dm-sans",
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -29,8 +30,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
-      <body className={inter.className}>
+    <html lang="en" className={`${dmSans.variable} ${playfair.variable}`}>
+      <body className={dmSans.className}>
         <Nav />
         <main>{children}</main>
         <Footer />

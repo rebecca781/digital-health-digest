@@ -36,7 +36,7 @@ export default function ContactForm() {
   }
 
   const inputClass =
-    "w-full border border-[#d8d4cc] bg-white px-4 py-2.5 text-sm text-[#1a1a1a] placeholder-[#bbb] focus:outline-none focus:border-[#326891] transition-colors";
+    "w-full border border-[#d8d4cc] bg-[#fdfaf5] px-4 py-2.5 text-sm text-[#1a1a1a] placeholder-[#bbb] focus:outline-none focus:border-[#326891] transition-colors";
 
   return (
     <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-6">

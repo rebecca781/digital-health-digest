@@ -19,7 +19,7 @@ const config: Config = {
       },
       fontFamily: {
         serif: ["var(--font-playfair)", "Georgia", "Cambria", '"Times New Roman"', "Times", "serif"],
-        sans: ["var(--font-inter)", "Inter", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
+        sans: ["var(--font-dm-sans)", "DM Sans", "ui-sans-serif", "system-ui", "-apple-system", "sans-serif"],
       },
     },
   },
