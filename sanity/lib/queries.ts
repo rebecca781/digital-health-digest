@@ -53,9 +53,9 @@ export const MOST_READ_QUERY = groq`
   }
 `;
 
-/** Latest articles (newest 3, excluding the featured one) */
+/** Latest articles (newest 6, excluding the featured one) */
 export const LATEST_ARTICLES_QUERY = groq`
-  *[_type == "article" && featured != true] | order(date desc) [0...3] {
+  *[_type == "article" && featured != true] | order(date desc) [0...6] {
     ${ARTICLE_FIELDS}
   }
 `;

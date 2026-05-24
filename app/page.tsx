@@ -266,12 +266,25 @@ export default async function HomePage() {
             className="py-12 border-b border-[#d8d4cc]"
             style={{ borderBottomWidth: "0.5px" }}
           >
-            <h2
-              className="font-medium text-[#888] uppercase tracking-widest"
-              style={{ fontSize: "11px", marginBottom: "1.5rem" }}
-            >
-              Latest Reviews
-            </h2>
+            <div className="flex items-center justify-between" style={{ marginBottom: "1.5rem" }}>
+              <h2
+                className="font-medium text-[#888] uppercase tracking-widest"
+                style={{ fontSize: "11px" }}
+              >
+                Latest Reviews
+              </h2>
+              <Link
+                href="/category/all"
+                style={{
+                  fontSize: "11px",
+                  color: "#326891",
+                  textDecoration: "none",
+                  letterSpacing: "0.04em",
+                }}
+              >
+                View all →
+              </Link>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
               {latest.map((article) => (
