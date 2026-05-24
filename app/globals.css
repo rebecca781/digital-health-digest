@@ -29,3 +29,63 @@ main {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* ── Mobile hero: tighten spacing and type sizes (≤ 767px only) ────────── */
+@media (max-width: 767px) {
+  /* Hero left column padding */
+  .hero-left {
+    padding: 1rem !important;
+  }
+
+  /* Featured headline */
+  .hero-headline {
+    font-size: 22px !important;
+    line-height: 1.25 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Dek / summary */
+  .hero-dek {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* Date meta row */
+  .hero-meta {
+    margin-bottom: 0.5rem !important;
+  }
+
+  /* "Read the review" CTA */
+  .hero-cta {
+    font-size: 11px !important;
+    margin-top: 0.5rem !important;
+  }
+
+  /* Most Read panel padding */
+  .most-read-panel {
+    padding: 0.75rem 1rem !important;
+  }
+
+  /* Per-item vertical rhythm */
+  .most-read-item {
+    padding-top: 0.625rem !important;
+    padding-bottom: 0.625rem !important;
+  }
+
+  /* Numbered rank */
+  .most-read-num {
+    font-size: 16px !important;
+    width: 1.5rem !important;
+  }
+
+  /* Article headline inside most-read */
+  .most-read-title {
+    font-size: 12px !important;
+  }
+
+  /* Category tag inside most-read */
+  .most-read-cat {
+    font-size: 9px !important;
+  }
+}

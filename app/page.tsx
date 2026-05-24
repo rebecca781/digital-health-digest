@@ -78,7 +78,7 @@ export default async function HomePage() {
           >
             {/* Left — featured article */}
             <div
-              className="md:border-r border-[#d8d4cc]"
+              className="hero-left md:border-r border-[#d8d4cc]"
               style={{
                 padding: "2rem 1.5rem",
                 borderRightWidth: "1px",
@@ -107,7 +107,7 @@ export default async function HomePage() {
 
                   {/* Headline */}
                   <h1
-                    className="font-serif"
+                    className="font-serif hero-headline"
                     style={{
                       fontSize: "28px",
                       lineHeight: 1.2,
@@ -127,6 +127,7 @@ export default async function HomePage() {
 
                   {/* Dek */}
                   <p
+                    className="hero-dek"
                     style={{
                       fontSize: "13px",
                       color: "#4a4a4a",
@@ -138,7 +139,7 @@ export default async function HomePage() {
                   </p>
 
                   {/* Date */}
-                  <div style={{ marginBottom: "1rem" }}>
+                  <div className="hero-meta" style={{ marginBottom: "1rem" }}>
                     <span style={{ fontSize: "10px", color: "#888" }}>
                       {formatDate(hero.date)}
                     </span>
@@ -147,6 +148,7 @@ export default async function HomePage() {
                   {/* CTA */}
                   <Link
                     href={`/reviews/${hero.slug}`}
+                    className="hero-cta"
                     style={{
                       fontSize: "11px",
                       color: "#1a1a1a",
@@ -167,7 +169,7 @@ export default async function HomePage() {
             {/* Right — Most Read sidebar */}
             {mostRead.length > 0 && (
               <div
-                className="border-t border-[#d8d4cc] md:border-t-0"
+                className="most-read-panel border-t border-[#d8d4cc] md:border-t-0"
                 style={{ padding: "1.5rem", borderTopWidth: "1px" }}
               >
                 <p
@@ -187,6 +189,7 @@ export default async function HomePage() {
                   {mostRead.map((article, i) => (
                     <div
                       key={article.slug}
+                      className="most-read-item"
                       style={{
                         paddingTop: i > 0 ? "0.875rem" : undefined,
                         paddingBottom: "0.875rem",
@@ -196,7 +199,7 @@ export default async function HomePage() {
                       <div className="flex gap-3">
                         {/* Number */}
                         <span
-                          className="font-serif shrink-0"
+                          className="font-serif shrink-0 most-read-num"
                           style={{
                             fontSize: "20px",
                             color: "#326891",
@@ -213,6 +216,7 @@ export default async function HomePage() {
                         <div>
                           <Link
                             href={`/category/${article.categorySlug}`}
+                            className="most-read-cat"
                             style={{
                               fontSize: "9px",
                               letterSpacing: "0.1em",
@@ -226,6 +230,7 @@ export default async function HomePage() {
                             {article.category}
                           </Link>
                           <h3
+                            className="most-read-title"
                             style={{
                               fontSize: "13px",
                               color: "#1a1a1a",
