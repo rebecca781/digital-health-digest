@@ -49,3 +49,17 @@ export interface SanityAboutPage {
   image: string | null;
   imageAlt: string | null;
 }
+
+// ── How We Score singleton ───────────────────────────────────────────────────
+
+export interface SanityHowWeScoreCriterion {
+  title: string;
+  description: string;
+}
+
+export interface SanityHowWeScore {
+  heading: string;
+  subheading: string;
+  criteria: SanityHowWeScoreCriterion[];
+  independenceNote: string | null;
+}

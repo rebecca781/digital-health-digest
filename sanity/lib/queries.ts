@@ -101,6 +101,19 @@ export const ALL_CATEGORY_SLUGS_QUERY = groq`
   *[_type == "category"].slug.current
 `;
 
+/** How We Score singleton — fixed _id "howWeScore" */
+export const HOW_WE_SCORE_QUERY = groq`
+  *[_type == "howWeScore" && _id == "howWeScore"][0] {
+    heading,
+    subheading,
+    criteria[] {
+      title,
+      description
+    },
+    independenceNote
+  }
+`;
+
 /** About page singleton — fixed _id "about" */
 export const ABOUT_PAGE_QUERY = groq`
   *[_type == "about" && _id == "about"][0] {

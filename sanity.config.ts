@@ -49,6 +49,15 @@ export default defineConfig({
                   .schemaType("about")
                   .title("About Page")
               ),
+            S.listItem()
+              .title("How We Score")
+              .id("how-we-score-singleton")
+              .child(
+                S.document()
+                  .documentId("howWeScore")
+                  .schemaType("howWeScore")
+                  .title("How We Score")
+              ),
           ]),
     }),
     visionTool({ defaultApiVersion: "2024-01-01" }),
