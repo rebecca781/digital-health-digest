@@ -40,7 +40,7 @@ const client = createClient({
 const doc = {
   _id: "about",           // fixed ID — makes this a singleton
   _type: "about",
-  pageTitle: "About The Digital Health Digest",
+  pageTitle: "About The Telehealth Review",
   tagline:
     "Independent editorial reviews of direct-to-consumer telehealth brands — so you can make smarter decisions about your care.",
   body: [
@@ -53,7 +53,7 @@ const doc = {
         {
           _type: "span",
           _key: "s1",
-          text: "The Digital Health Digest is an independent editorial site that researches, tests, and compares direct-to-consumer telehealth brands across men's health, women's health, mental health, weight loss, dermatology, primary care, and specialty categories.",
+          text: "The Telehealth Review is an independent editorial site that researches, tests, and compares direct-to-consumer telehealth brands across men's health, women's health, mental health, weight loss, dermatology, primary care, and specialty categories.",
           marks: [],
         },
       ],

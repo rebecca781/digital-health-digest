@@ -7,9 +7,9 @@ import type { SanityHowWeScore } from "@/types/sanity";
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: "How We Score | The Digital Health Digest",
+  title: "How We Score | The Telehealth Review",
   description:
-    "Every review on The Digital Health Digest is based on the same five criteria. Here's exactly how we evaluate telehealth platforms.",
+    "Every review on The Telehealth Review is based on the same five criteria. Here's exactly how we evaluate telehealth platforms.",
 };
 
 export default async function HowWeScorePage() {
@@ -18,7 +18,7 @@ export default async function HowWeScorePage() {
   const heading = page?.heading ?? "How We Score";
   const subheading =
     page?.subheading ??
-    "Every review on The Digital Health Digest is based on the same criteria. Here’s exactly how we evaluate telehealth platforms.";
+    "Every review on The Telehealth Review is based on the same criteria. Here’s exactly how we evaluate telehealth platforms.";
   const criteria = page?.criteria ?? [];
   const independenceNote = page?.independenceNote ?? null;
 
@@ -98,7 +98,7 @@ export default async function HowWeScorePage() {
               </>
             ) : (
               <>
-                The Digital Health Digest is editorially independent. We do not
+                The Telehealth Review is editorially independent. We do not
                 accept payment, free product, or any other form of compensation from
                 the brands we review. Our only source of revenue is reader support.
                 If you believe a review is inaccurate or out of date,{" "}

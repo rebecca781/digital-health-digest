@@ -25,9 +25,9 @@ export default function Nav() {
           href="/"
           className="text-base font-semibold tracking-tight text-[#1a1a1a] shrink-0 whitespace-nowrap"
         >
-          The Digital{" "}
-          <span className="text-[#326891]">Health</span>
-          {" "}Digest
+          The{" "}
+          <span className="text-[#0e4da4]">Telehealth</span>
+          {" "}Review
         </Link>
 
         {/* ── Desktop nav (md+) ─────────────────────────── */}

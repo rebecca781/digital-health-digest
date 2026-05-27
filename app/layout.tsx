@@ -19,7 +19,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "The Digital Health Digest",
+  title: "The Telehealth Review",
   description:
     "Editorial reviews comparing DTC telehealth brands across men's health, women's health, mental health, weight loss, and more.",
 };

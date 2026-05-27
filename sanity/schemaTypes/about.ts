@@ -19,7 +19,7 @@ export const aboutType = defineType({
       name: "pageTitle",
       title: "Page Title",
       type: "string",
-      description: 'Displayed as the large heading. E.g. "About The Digital Health Digest"',
+      description: 'Displayed as the large heading. E.g. "About The Telehealth Review"',
       validation: (Rule) => Rule.required(),
     }),
     defineField({

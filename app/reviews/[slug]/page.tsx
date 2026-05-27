@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: PageProps) {
   );
   if (!article) return {};
   return {
-    title: `${article.title} | The Digital Health Digest`,
+    title: `${article.title} | The Telehealth Review`,
     description: article.summary,
   };
 }
@@ -652,7 +652,7 @@ export default async function ReviewPage({ params }: PageProps) {
 
         {/* Byline */}
         <p className="text-[#888]" style={{ fontSize: "13px" }}>
-          By The Digital Health Digest&nbsp;&nbsp;·&nbsp;&nbsp;{formatDate(article.date)}
+          By The Telehealth Review&nbsp;&nbsp;·&nbsp;&nbsp;{formatDate(article.date)}
         </p>
       </header>
 
@@ -721,7 +721,7 @@ export default async function ReviewPage({ params }: PageProps) {
         style={{ borderTopWidth: "0.5px" }}
       >
         <p className="italic text-[#888]" style={{ fontSize: "12px" }}>
-          The Digital Health Digest is editorially independent. We do not accept
+          The Telehealth Review is editorially independent. We do not accept
           payment from the brands we review.
         </p>
       </div>

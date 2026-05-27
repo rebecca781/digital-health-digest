@@ -8,7 +8,7 @@ export default function Footer() {
     >
       <div className="max-w-6xl mx-auto px-6 h-14 flex items-center justify-between">
         <Link href="/" className="text-sm font-semibold text-[#1a1a1a]">
-          The Digital Health Digest
+          The Telehealth Review
         </Link>
         <nav className="flex items-center gap-6 text-sm text-[#4a4a4a]">
           <Link href="/about" className="hover:text-[#326891] transition-colors">

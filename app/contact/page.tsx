@@ -3,7 +3,7 @@ import Link from "next/link";
 import ContactForm from "./ContactForm";
 
 export const metadata: Metadata = {
-  title: "Get in Touch | The Digital Health Digest",
+  title: "Get in Touch | The Telehealth Review",
   description:
     "Have a question, tip, or want to suggest a platform we should review? Send us a message.",
 };

@@ -11,8 +11,8 @@ export async function generateMetadata() {
   const page = await safeFetch<SanityAboutPage | null>(ABOUT_PAGE_QUERY, {}, null);
   return {
     title: page?.pageTitle
-      ? `${page.pageTitle} | The Digital Health Digest`
-      : "About | The Digital Health Digest",
+      ? `${page.pageTitle} | The Telehealth Review`
+      : "About | The Telehealth Review",
     description: page?.tagline ?? undefined,
   };
 }
@@ -48,7 +48,7 @@ const ptComponents: PortableTextComponents = {
 };
 
 const PLACEHOLDER: SanityAboutPage = {
-  pageTitle: "About The Digital Health Digest",
+  pageTitle: "About The Telehealth Review",
   tagline:
     "Independent editorial reviews of direct-to-consumer telehealth brands — so you can make smarter decisions about your care.",
   image: null,
@@ -63,7 +63,7 @@ const PLACEHOLDER: SanityAboutPage = {
         {
           _type: "span",
           _key: "s1",
-          text: "The Digital Health Digest is an independent editorial site that researches, tests, and compares direct-to-consumer telehealth brands across men's health, women's health, mental health, weight loss, dermatology, primary care, and specialty categories.",
+          text: "The Telehealth Review is an independent editorial site that researches, tests, and compares direct-to-consumer telehealth brands across men's health, women's health, mental health, weight loss, dermatology, primary care, and specialty categories.",
           marks: [],
         },
       ],

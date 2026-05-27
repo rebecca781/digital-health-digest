@@ -43,7 +43,7 @@ const doc = {
   heading: "How We Score",
 
   subheading:
-    "Every review on The Digital Health Digest is based on the same criteria. Here's exactly how we evaluate telehealth platforms.",
+    "Every review on The Telehealth Review is based on the same criteria. Here's exactly how we evaluate telehealth platforms.",
 
   criteria: [
     {
@@ -84,7 +84,7 @@ const doc = {
   ],
 
   independenceNote:
-    "The Digital Health Digest is editorially independent. We do not accept payment, free product, or any other form of compensation from the brands we review. Our only source of revenue is reader support.",
+    "The Telehealth Review is editorially independent. We do not accept payment, free product, or any other form of compensation from the brands we review. Our only source of revenue is reader support.",
 };
 
 console.log("\n📝  Seeding How We Score page…");

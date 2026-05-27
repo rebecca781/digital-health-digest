@@ -406,7 +406,7 @@ export default async function HomePage() {
             className="font-serif"
             style={{ fontSize: "20px", color: "#fdfaf5", marginBottom: "0.5rem" }}
           >
-            Stay clinician-forward
+            Stay ahead of digital health
           </h2>
           <p
             style={{
